@@ -3,10 +3,12 @@ package net.yorksolutions.responsebe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
+@Service
 public class AssignmentService {
     
     private AssignmentRepository assignmentRepository;
@@ -25,8 +27,8 @@ public class AssignmentService {
      ********************/
     
     public void createAssignment(Long assignedTo, Long assignmentId) {
-        Optional<Assignment> assignments = assignmentRepository.findById(assignmentId);
-        if (assignments.isEmpty()) {
+        Optional<Assignment> assignment = assignmentRepository.findById(assignmentId);
+        if (assignment.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         assignmentRepository.save(new Assignment(assignedTo, assignmentId));
