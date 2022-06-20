@@ -30,6 +30,13 @@ public class Response {
     @JsonProperty
     String status;
 
+    public Response(Long assignmentId, Long quizId, String question, String response, String status) {
+        this.assignmentId = assignmentId;
+        this.quizId = quizId;
+        this.question = question;
+        this.response = response;
+        this.status = status;
+    }
     public Response() {
 
     }
@@ -45,5 +52,11 @@ public class Response {
     @Override
     public int hashCode() {
         return Objects.hash(id, assignmentId, quizId, question, response, status);
+    }
+
+    // ******** setters ********
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
