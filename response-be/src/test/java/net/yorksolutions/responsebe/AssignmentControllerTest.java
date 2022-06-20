@@ -47,9 +47,10 @@ class AssignmentControllerTest {
     void itShouldRespondBAD_REQUESTWhenNoAssignmentId() {
         final Long assignedTo = 99999L;
         final Long assignmentId = 9999L;
+        final Long quizId = 9999L;
         String url = "http://localhost:" + port + "/addAssignment?assignedTo=" + assignedTo +
-                "&assignmentId=" + assignmentId;
-        doThrow(new ResponseStatusException(HttpStatus.ACCEPTED)).when(service).addAssignment(assignedTo, assignmentId);
+                "&assignmentId=" + assignmentId + "&quizId=" + quizId;
+        doThrow(new ResponseStatusException(HttpStatus.ACCEPTED)).when(service).addAssignment(assignedTo, assignmentId, quizId);
         final ResponseEntity<Void> response = rest.getForEntity(url, Void.class);
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }

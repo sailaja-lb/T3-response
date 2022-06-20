@@ -43,9 +43,10 @@ public class Assignment {
     
     }
     
-    public Assignment(Long assignedTo, Long assignmentId) {
+    public Assignment(Long assignedTo, Long assignmentId, Long quizId) {
         this.assignedTo = assignedTo;
         this.assignmentId = assignmentId;
+        this.quizId = quizId;
     }
     
     
