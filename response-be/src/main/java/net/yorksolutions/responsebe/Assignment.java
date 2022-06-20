@@ -23,7 +23,7 @@ public class Assignment {
     Long assignedTo; // user's generated id
     
     @JsonProperty
-    Long quizId; // called Quiz Template ID in other BEs
+    Long quizTemplateId; // called Quiz Template ID in other BEs
     
     // assigned to
     // @OneToMany(cascade = ALL)
@@ -36,7 +36,7 @@ public class Assignment {
         this.grade = grade;
         this.gradedBy = gradedBy;
         this.assignedTo = assignedTo;
-        this.quizId = quizId;
+        this.quizTemplateId = quizTemplateId;
     }
     
     public Assignment() {
@@ -46,7 +46,7 @@ public class Assignment {
     public Assignment(Long assignedTo, Long assignmentId, Long quizId) {
         this.assignedTo = assignedTo;
         this.assignmentId = assignmentId;
-        this.quizId = quizId;
+        this.quizTemplateId = quizTemplateId;
     }
     
     
@@ -60,12 +60,14 @@ public class Assignment {
         }
         Assignment that = (Assignment) o;
         return  Objects.equals(grade,
-                that.grade) && Objects.equals(gradedBy, that.gradedBy) && Objects.equals(assignedTo, that.assignedTo) && Objects.equals(quizId, that.quizId);
+                that.grade) && Objects.equals(gradedBy, that.gradedBy)
+                && Objects.equals(assignedTo, that.assignedTo)
+                && Objects.equals(quizTemplateId, that.quizTemplateId);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(grade, gradedBy, assignedTo, quizId);
+        return Objects.hash(grade, gradedBy, assignedTo, quizTemplateId);
     }
     
     @Override
@@ -74,7 +76,7 @@ public class Assignment {
                 "grade='" + grade + '\'' +
                 ", gradedBy='" + gradedBy + '\'' +
                 ", assignedTo=" + assignedTo +
-                ", quizId=" + quizId +
+                ", quizTemplateId=" + quizTemplateId +
                 '}';
     }
 }
