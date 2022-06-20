@@ -17,10 +17,10 @@ public class Assignment {
     String grade;
     
     @JsonProperty
-    String gradedBy;
+    Long gradedBy; // recruiter's generated id
     
     @JsonProperty
-    Long assignedTo;
+    Long assignedTo; // user's generated id
     
     @JsonProperty
     Long quizId; // called Quiz Template ID in other BEs
@@ -31,9 +31,8 @@ public class Assignment {
     // quiz template id
     // @OneToMany(cascade = ALL)
     
-    public Assignment(Long assignmentId, String grade, String gradedBy, Long assignedTo,
+    public Assignment(String grade, Long gradedBy, Long assignedTo,
                       Long quizId) {
-        this.assignmentId = assignmentId;
         this.grade = grade;
         this.gradedBy = gradedBy;
         this.assignedTo = assignedTo;
@@ -59,20 +58,19 @@ public class Assignment {
             return false;
         }
         Assignment that = (Assignment) o;
-        return Objects.equals(assignmentId, that.assignmentId) && Objects.equals(grade,
+        return  Objects.equals(grade,
                 that.grade) && Objects.equals(gradedBy, that.gradedBy) && Objects.equals(assignedTo, that.assignedTo) && Objects.equals(quizId, that.quizId);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(assignmentId, grade, gradedBy, assignedTo, quizId);
+        return Objects.hash(grade, gradedBy, assignedTo, quizId);
     }
     
     @Override
     public String toString() {
         return "Assignments{" +
-                "assignmentId=" + assignmentId +
-                ", grade='" + grade + '\'' +
+                "grade='" + grade + '\'' +
                 ", gradedBy='" + gradedBy + '\'' +
                 ", assignedTo=" + assignedTo +
                 ", quizId=" + quizId +

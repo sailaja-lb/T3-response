@@ -27,7 +27,7 @@ public class AssignmentService {
     public void createAssignment(Long assignedTo, Long assignmentId) {
         Optional<Assignment> assignments = assignmentRepository.findById(assignmentId);
         if (assignments.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         assignmentRepository.save(new Assignment(assignedTo, assignmentId));
     }
