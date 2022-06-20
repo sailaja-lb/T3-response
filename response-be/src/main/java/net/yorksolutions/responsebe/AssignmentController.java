@@ -21,8 +21,9 @@ public class AssignmentController {
     
     @GetMapping("/addAssignment")
     @CrossOrigin
-    public void addAssignment(@RequestParam Long assignedTo, @RequestParam Long assignmentId) {
-        service.addAssignment(assignedTo, assignmentId);
+    public void addAssignment(@RequestParam Long assignedTo, @RequestParam Long assignmentId,
+                              @RequestParam Long quizId) {
+        service.addAssignment(assignedTo, assignmentId, quizId);
     }
     
     
