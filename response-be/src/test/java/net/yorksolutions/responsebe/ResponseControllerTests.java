@@ -38,8 +38,8 @@ public class ResponseControllerTests {
     // ******** test getAllResponses ********
     @Test
     void itShouldCallGetAllResponsesAndReturnIterable() {
-        Response newResponse1 = new Response(1L, 1L, "q1", "r1", "s1");
-        Response newResponse2 = new Response(2L, 2L, "q2", "r2", "s2");
+        Response newResponse1 = new Response(1L, 1L, "q1", "r1", true);
+        Response newResponse2 = new Response(2L, 2L, "q2", "r2", false);
         newResponse1.setId(1L);
         newResponse2.setId(2L);
         Response[] responses = new Response[] {newResponse1, newResponse2};
