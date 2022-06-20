@@ -34,7 +34,7 @@ class AssignmentServiceTest {
         ArgumentCaptor<Assignment> captor = ArgumentCaptor.forClass(Assignment.class);
         when(assignmentRepository.save(captor.capture())).thenReturn(new Assignment(assignedTo,
          assignmentId));
-        assertDoesNotThrow(() -> service.createAssignment(assignedTo, assignmentId));
+        assertDoesNotThrow(() -> service.addAssignment(assignedTo, assignmentId));
         assertEquals(new Assignment(assignedTo, assignmentId), captor.getValue());
     }
     
@@ -43,7 +43,7 @@ class AssignmentServiceTest {
         final Long assignedTo = 99999L;
         final Long assignmentId = 9999L;
         when(assignmentRepository.findById(assignmentId)).thenReturn(Optional.empty());
-        assertThrows(ResponseStatusException.class, () -> service.createAssignment(assignedTo,
+        assertThrows(ResponseStatusException.class, () -> service.addAssignment(assignedTo,
                 assignmentId));
     }
     
