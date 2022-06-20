@@ -26,20 +26,12 @@ public class AssignmentService {
      * Code Starts Here *
      ********************/
     
-    public void createAssignment(Long assignedTo, Long assignmentId) {
+    public void addAssignment(Long assignedTo, Long assignmentId) {
         Optional<Assignment> assignment = assignmentRepository.findById(assignmentId);
         if (assignment.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         assignmentRepository.save(new Assignment(assignedTo, assignmentId));
     }
-    
-    
-//    public void addAssignment(Long userId, Long assignmentId) {
-//        if (assignmentRepository.findById(assignmentId).isEmpty()) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        }
-//        assignmentRepository.
-//    }
     
 }

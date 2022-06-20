@@ -49,7 +49,7 @@ class AssignmentControllerTest {
         final Long assignmentId = 9999L;
         String url = "http://localhost:" + port + "/addAssignment?assignedTo=" + assignedTo +
                 "&assignmentId=" + assignmentId;
-        doThrow(new ResponseStatusException(HttpStatus.ACCEPTED)).when(service).createAssignment(assignedTo, assignmentId);
+        doThrow(new ResponseStatusException(HttpStatus.ACCEPTED)).when(service).addAssignment(assignedTo, assignmentId);
         final ResponseEntity<Void> response = rest.getForEntity(url, Void.class);
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
