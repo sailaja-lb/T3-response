@@ -16,4 +16,8 @@ public class ResponseService {
 //    public ResponseService(ResponseRepository responseRepository, RestTemplate rest) {
 //        this.responseRepository = responseRepository;
 //    }
+
+    public Iterable<Response> getAllResponses() {
+        return responseRepository.findAll();
+    }
 }
