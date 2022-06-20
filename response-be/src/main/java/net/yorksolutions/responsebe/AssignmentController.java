@@ -22,9 +22,13 @@ public class AssignmentController {
     @GetMapping("/addAssignment")
     @CrossOrigin
     public void addAssignment(@RequestParam Long assignedTo, @RequestParam Long assignmentId,
-                              @RequestParam Long quizId) {
-        service.addAssignment(assignedTo, assignmentId, quizId);
+                              @RequestParam Long quizTemplateId) {
+        service.addAssignment(assignedTo, assignmentId, quizTemplateId);
     }
     
-    
+//    @RequestBody("/getAssignments")
+//    @CrossOrigin
+//    public void getAssignments(){
+        // TODO ask Leng to show how to use Iterable<Assignment>get all assignments for a user
+//    }
 }
