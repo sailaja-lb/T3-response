@@ -1,4 +1,5 @@
 package net.yorksolutions.responsebe;
 
-public class AssignmentsService {
+class AssignmentControllerTest {
+
 }

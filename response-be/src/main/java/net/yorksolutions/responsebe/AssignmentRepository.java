@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface AssignmentsRepository extends CrudRepository<Assignments, Long> {
+public interface AssignmentRepository extends CrudRepository<Assignment, Long> {
     
-    Optional<Assignments> findById(Long id);
+    Optional<Assignment> findById(Long assignmentId);
     
 }
