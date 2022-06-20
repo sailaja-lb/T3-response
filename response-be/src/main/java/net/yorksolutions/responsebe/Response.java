@@ -13,29 +13,29 @@ public class Response {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @JsonProperty
-    Long id;
+    Long responseId;
 
     @JsonProperty
     Long assignmentId;
 
     @JsonProperty
-    Long quizId;
+    Long questionId;
 
     @JsonProperty
-    String question;
+    String questionText;
 
     @JsonProperty
     String response;
 
     @JsonProperty
-    String status;
+    Boolean completed;
 
-    public Response(Long assignmentId, Long quizId, String question, String response, String status) {
+    public Response(Long assignmentId, Long quizId, String questionText, String response, Boolean completed) {
         this.assignmentId = assignmentId;
-        this.quizId = quizId;
-        this.question = question;
+        this.questionId = questionId;
+        this.questionText = questionText;
         this.response = response;
-        this.status = status;
+        this.completed = completed;
     }
     public Response() {
 
@@ -46,17 +46,17 @@ public class Response {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Response response1 = (Response) o;
-        return Objects.equals(id, response1.id) && Objects.equals(assignmentId, response1.assignmentId) && Objects.equals(quizId, response1.quizId) && Objects.equals(question, response1.question) && Objects.equals(response, response1.response) && Objects.equals(status, response1.status);
+        return Objects.equals(responseId, response1.responseId) && Objects.equals(assignmentId, response1.assignmentId) && Objects.equals(questionId, response1.questionId) && Objects.equals(questionText, response1.questionText) && Objects.equals(response, response1.response) && Objects.equals(completed, response1.completed);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, assignmentId, quizId, question, response, status);
+        return Objects.hash(responseId, assignmentId, questionId, questionText, response, completed);
     }
 
-    // ******** setters ********
+// ******** setters ********
 
     public void setId(Long id) {
-        this.id = id;
+        this.responseId = responseId;
     }
 }
