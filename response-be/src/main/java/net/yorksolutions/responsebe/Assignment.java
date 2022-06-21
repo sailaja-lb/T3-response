@@ -23,7 +23,12 @@ public class Assignment {
     Long assignedTo; // user's generated id
     
     @JsonProperty
-    Long quizTemplateId; // called Quiz Template ID in other BEs
+    Long quizTemplateId; // Id from quizTemplate
+    
+    // Join table for assignments and response
+    
+    // TODO update data types in shared Sheets and Docs
+    // TODO add AssignmentTable to Sheets
     
     // assigned to
     // @OneToMany(cascade = ALL)
@@ -32,7 +37,7 @@ public class Assignment {
     // @OneToMany(cascade = ALL)
     
     public Assignment(String grade, Long gradedBy, Long assignedTo,
-                      Long quizId) {
+                      Long quizTemplateId) {
         this.grade = grade;
         this.gradedBy = gradedBy;
         this.assignedTo = assignedTo;
@@ -43,7 +48,7 @@ public class Assignment {
     
     }
     
-    public Assignment(Long assignedTo, Long assignmentId, Long quizId) {
+    public Assignment(Long assignedTo, Long quizTemplateId) {
         this.assignedTo = assignedTo;
         this.assignmentId = assignmentId;
         this.quizTemplateId = quizTemplateId;
