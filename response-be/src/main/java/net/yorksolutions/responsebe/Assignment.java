@@ -36,6 +36,7 @@ public class Assignment {
     // TODO add AssignmentTable to Sheets
     
     // assigned to
+    @JsonProperty
     @OneToMany(cascade = ALL)
     List<Response> responses;
     
