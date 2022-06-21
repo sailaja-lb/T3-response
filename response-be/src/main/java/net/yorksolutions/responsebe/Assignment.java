@@ -28,6 +28,7 @@ public class Assignment {
     @JsonProperty
     Long quizTemplateId; // Id from quizTemplate
     
+    
     // Join table for assignments and response
     
     // TODO update data types in shared Sheets and Docs
