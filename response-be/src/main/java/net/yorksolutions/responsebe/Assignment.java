@@ -59,6 +59,7 @@ public class Assignment {
         this.quizTemplateId = quizTemplateId;
         this.responses = responses;
     }
+    
     public void addResponse(Response response) {
         responses.add(response);
     }
@@ -79,7 +80,7 @@ public class Assignment {
             return false;
         }
         Assignment that = (Assignment) o;
-        return  Objects.equals(grade,
+        return Objects.equals(grade,
                 that.grade) && Objects.equals(gradedBy, that.gradedBy)
                 && Objects.equals(assignedTo, that.assignedTo)
                 && Objects.equals(quizTemplateId, that.quizTemplateId);

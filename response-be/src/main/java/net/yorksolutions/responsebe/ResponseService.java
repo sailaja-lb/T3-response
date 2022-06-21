@@ -1,6 +1,7 @@
 package net.yorksolutions.responsebe;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class ResponseService {
@@ -27,13 +29,14 @@ public class ResponseService {
 //        this.responseRepository = responseRepository;
 //        this.assignmentRepository = assignmentRepository;
 //    }
-
+    
     public Iterable<Response> getAllResponses() {
         return responseRepository.findAllByCompletedIsTrue();
     }
 
 //    public Response deleteResponsesForAssignment(Long assignmentId) {
-//        ResponseStatusException exception = new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cannot delete an assignment that does not exist");
+//        ResponseStatusException exception = new ResponseStatusException(HttpStatus.BAD_REQUEST,
+//        "Cannot delete an assignment that does not exist");
 //
 //        if(!responseRepository.existsById(assignmentId)) {
 //            throw exception;
@@ -59,7 +62,8 @@ public class ResponseService {
     }
 
 //    public Iterable<Response> deleteResponsesForAssignment(Long assignmentId) {
-////        List<Response> responses = List.of(responseRepository.findAllByAssignmentId(assignmentId));
+////        List<Response> responses = List.of(responseRepository.findAllByAssignmentId
+// (assignmentId));
 //        Iterable<Response> test = responseRepository.deleteAllByAssignmentId(assignmentId);
 //
 //    }
