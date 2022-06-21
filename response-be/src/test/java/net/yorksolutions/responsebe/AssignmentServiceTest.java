@@ -31,7 +31,8 @@ class AssignmentServiceTest {
         final Long assignedTo = 99999L;
         final Long assignmentId = 9999L;
         final Long quizTemplateId = 9999L;
-        when(assignmentRepository.findByQuizTemplateId(quizTemplateId)).thenReturn(Optional.of(new Assignment()));
+        final Assignment assignment = new Assignment(quizTemplateId);
+        when(assignmentRepository.findByQuizTemplateId(quizTemplateId)).thenReturn(Optional.of(assignment));
         ArgumentCaptor<Assignment> captor = ArgumentCaptor.forClass(Assignment.class);
         when(assignmentRepository.save(captor.capture())).thenReturn(new Assignment(assignedTo, quizTemplateId));
         assertDoesNotThrow(() -> service.addAssignment(assignedTo, quizTemplateId));
