@@ -50,7 +50,7 @@ class AssignmentControllerTest {
         final Long quizTemplateId = 9999L;
         String url = "http://localhost:" + port + "/addAssignment?assignedTo=" + assignedTo +
                 "&assignmentId=" + assignmentId + "&quizTemplateId=" + quizTemplateId;
-        doThrow(new ResponseStatusException(HttpStatus.ACCEPTED)).when(service).addAssignment(assignedTo, assignmentId, quizTemplateId);
+        doThrow(new ResponseStatusException(HttpStatus.ACCEPTED)).when(service).addAssignment(assignedTo, quizTemplateId);
         final ResponseEntity<Void> response = rest.getForEntity(url, Void.class);
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
