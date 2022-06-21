@@ -36,8 +36,7 @@ public class AssignmentService {
     
     public void updateGrade(Long assignmentId, String grade, Long gradedBy) {
         Optional<Assignment> assignment = assignmentRepository.findById(assignmentId);
-        Optional<Assignment> whoGraded = assignmentRepository.findByGradedBy(gradedBy);
-        if (assignment.isEmpty() || whoGraded.isEmpty()) {
+        if (assignment.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         } else {
             assignment.get().grade = grade;
@@ -46,7 +45,7 @@ public class AssignmentService {
         }
     }
     
-    public Optional<Assignment> getAllGradedResponses(Long assignedTo, String grade) {
+    public Iterable<Assignment> getAllGradedResponses(Long assignedTo, String grade) {
         return assignmentRepository.findAllByAssignedToAndGrade(assignedTo, grade);
     }
     

@@ -62,6 +62,11 @@ public class Assignment {
         this.responses = responses;
     }
     
+    public Assignment(Long assignedTo, String grade) {
+        this.assignedTo = assignedTo;
+        this.grade = grade;
+    }
+    
     public void addResponse(Response response) {
         responses.add(response);
     }

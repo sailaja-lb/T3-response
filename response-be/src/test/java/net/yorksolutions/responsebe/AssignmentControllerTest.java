@@ -13,8 +13,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -28,6 +31,9 @@ class AssignmentControllerTest {
     
     @Mock
     AssignmentService service;
+    
+    @Mock
+    AssignmentRepository assignmentRepository;
     
     @BeforeEach
     void setup() {
@@ -50,9 +56,39 @@ class AssignmentControllerTest {
         final Long quizTemplateId = 9999L;
         String url = "http://localhost:" + port + "/addAssignment?assignedTo=" + assignedTo +
                 "&assignmentId=" + assignmentId + "&quizTemplateId=" + quizTemplateId;
-        doThrow(new ResponseStatusException(HttpStatus.ACCEPTED)).when(service).addAssignment(assignedTo, quizTemplateId);
+        doThrow(new ResponseStatusException(HttpStatus.ACCEPTED)).when(service)
+                .addAssignment(assignedTo, quizTemplateId);
         final ResponseEntity<Void> response = rest.getForEntity(url, Void.class);
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+    }
+    
+    @Test
+    void itShouldThrowIfGradedByOrAssignmentIdEmpty() {
+        final Long assignmentId = 999999L;
+        final String grade = "some grade";
+        final Long gradedBy = 99999999L;
+        String url = "http://localhost:" + port + "/updateGrade?assignmentId=" + assignmentId +
+                "&grade=" + grade + "&gradedBy=" + gradedBy;
+        doThrow(new ResponseStatusException(HttpStatus.ACCEPTED)).when(service)
+                .updateGrade(assignmentId, grade, gradedBy);
+        final ResponseEntity<Void> response = rest.getForEntity(url, Void.class);
+        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+    }
+    
+    @Test
+    void itShouldReturnAllGradedResponses() {
+        final Long assignedTo = 99999L;
+        final String grade = "some grade";
+        final Iterable<Assignment> gradedResponses = new ArrayList<>();
+        String url =
+                "http://localhost:" + port + "/getAllGradedResponses?assignedTo=" + assignedTo +
+                        "&grade=" + grade;
+        when(controller.getAllGradedResponses(assignedTo, grade)).thenReturn(gradedResponses);
+        
+        final ResponseEntity<ArrayList> response = rest.getForEntity(url, ArrayList.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(true, response.hasBody());
+        assertEquals(gradedResponses, response.getBody());
     }
     
 }
