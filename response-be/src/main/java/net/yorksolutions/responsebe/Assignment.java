@@ -3,6 +3,7 @@ package net.yorksolutions.responsebe;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,23 +40,31 @@ public class Assignment {
     List<Response> responses;
     
     // quiz template id
-    // @OneToMany(cascade = ALL)
-    
-    public Assignment(String grade, Long gradedBy, Long assignedTo,
-                      Long quizTemplateId) {
-        this.grade = grade;
-        this.gradedBy = gradedBy;
-        this.assignedTo = assignedTo;
-        this.quizTemplateId = quizTemplateId;
-    }
+    // @OneToMany(cascade = ALL,)
     
     public Assignment() {
     
     }
+    public Assignment(Long quizTemplateId) {
+        this.quizTemplateId = quizTemplateId;
+        this.responses = new ArrayList<>();
+    }
+    
+    public Assignment(String grade, Long gradedBy, Long assignedTo,
+                      Long quizTemplateId, List<Response> responses) {
+        this.grade = grade;
+        this.gradedBy = gradedBy;
+        this.assignedTo = assignedTo;
+        this.quizTemplateId = quizTemplateId;
+        this.responses = responses;
+    }
+    public void addResponse(Response response) {
+        responses.add(response);
+    }
+    
     
     public Assignment(Long assignedTo, Long quizTemplateId) {
         this.assignedTo = assignedTo;
-        this.assignmentId = assignmentId;
         this.quizTemplateId = quizTemplateId;
     }
     
