@@ -46,6 +46,7 @@ public class Assignment {
     public Assignment() {
     
     }
+    
     public Assignment(Long assignmentId) {
         this.assignmentId = assignmentId;
         this.responses = new ArrayList<>();
