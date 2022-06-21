@@ -1,11 +1,9 @@
 package net.yorksolutions.responsebe;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -13,7 +11,7 @@ public class Response {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @JsonProperty
-    Long responseId;
+    Long id;
 
     @JsonProperty
     Long assignmentId;
@@ -29,6 +27,12 @@ public class Response {
 
     @JsonProperty
     Boolean completed;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "response_id")
+    Assignment assignment;
+
 
     public Response(Long assignmentId, Long quizId, String questionText, String response, Boolean completed) {
         this.assignmentId = assignmentId;
@@ -46,17 +50,17 @@ public class Response {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Response response1 = (Response) o;
-        return Objects.equals(responseId, response1.responseId) && Objects.equals(assignmentId, response1.assignmentId) && Objects.equals(questionId, response1.questionId) && Objects.equals(questionText, response1.questionText) && Objects.equals(response, response1.response) && Objects.equals(completed, response1.completed);
+        return Objects.equals(id, response1.id) && Objects.equals(assignmentId, response1.assignmentId) && Objects.equals(questionId, response1.questionId) && Objects.equals(questionText, response1.questionText) && Objects.equals(response, response1.response) && Objects.equals(completed, response1.completed);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(responseId, assignmentId, questionId, questionText, response, completed);
+        return Objects.hash(id, assignmentId, questionId, questionText, response, completed);
     }
 
 // ******** setters ********
 
     public void setId(Long id) {
-        this.responseId = responseId;
+        this.id = id;
     }
 }

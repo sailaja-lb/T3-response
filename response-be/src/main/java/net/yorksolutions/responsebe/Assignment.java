@@ -3,7 +3,10 @@ package net.yorksolutions.responsebe;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
+
+import static javax.persistence.CascadeType.ALL;
 
 @Entity
 public class Assignment {
@@ -31,7 +34,8 @@ public class Assignment {
     // TODO add AssignmentTable to Sheets
     
     // assigned to
-    // @OneToMany(cascade = ALL)
+    @OneToMany(cascade = ALL)
+    List<Response> responses;
     
     // quiz template id
     // @OneToMany(cascade = ALL)
