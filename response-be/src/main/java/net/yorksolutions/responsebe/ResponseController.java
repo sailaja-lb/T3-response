@@ -26,6 +26,11 @@ public class ResponseController {
 //        return responseService.deleteResponseForAssignment(assignmentId);
 //    }
 
+    @DeleteMapping("/deleteResponsesForAssignment/{assignmentId}")
+    @CrossOrigin
+    public void deleteResponsesForAssignment(Long assignmentId) {
+    }
+
     // ********* setters ********
     public void setResponseService(ResponseService editorService) {
         this.responseService = editorService;
