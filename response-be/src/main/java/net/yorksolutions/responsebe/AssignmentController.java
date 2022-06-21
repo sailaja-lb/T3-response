@@ -26,8 +26,20 @@ public class AssignmentController {
         service.addAssignment(assignedTo, quizTemplateId);
     }
     
-    //TODO updateGrade
-
+    @GetMapping("/updateGrade")
+    @CrossOrigin
+    public void updateGrade(@RequestParam Long assignmentId, @RequestParam String grade,
+                            @RequestParam Long gradedBy) {
+        service.updateGrade(assignmentId, grade, gradedBy);
+    }
+    
+    @GetMapping("/getAllGradedResponses")
+    @CrossOrigin
+    public Iterable<Assignment> getAllGradedResponses(@RequestParam Long assignedTo,
+                                                      @RequestParam String grade) {
+        return service.getAllGradedResponses(assignedTo, grade);
+    }
+    
     // TODO ask Leng to show how to use Iterable<Assignment>get all assignments for a user
-
+    
 }
