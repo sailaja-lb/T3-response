@@ -34,7 +34,8 @@ class AssignmentServiceTest {
         final Assignment assignment = new Assignment(quizTemplateId);
         when(assignmentRepository.findByQuizTemplateId(quizTemplateId)).thenReturn(Optional.of(assignment));
         ArgumentCaptor<Assignment> captor = ArgumentCaptor.forClass(Assignment.class);
-        when(assignmentRepository.save(captor.capture())).thenReturn(new Assignment(assignedTo, quizTemplateId));
+        when(assignmentRepository.save(captor.capture())).thenReturn(new Assignment(assignedTo,
+                quizTemplateId));
         assertDoesNotThrow(() -> service.addAssignment(assignedTo, quizTemplateId));
         assertEquals(new Assignment(assignedTo, quizTemplateId), captor.getValue());
     }
@@ -45,7 +46,33 @@ class AssignmentServiceTest {
         final Long assignmentId = 9999L;
         final Long quizTemplateId = 9999L;
         when(assignmentRepository.findByQuizTemplateId(quizTemplateId)).thenReturn(Optional.empty());
-        assertThrows(ResponseStatusException.class, () -> service.addAssignment(assignedTo, quizTemplateId));
+        assertThrows(ResponseStatusException.class, () -> service.addAssignment(assignedTo,
+                quizTemplateId));
     }
+    
+    @Test
+    void itShouldUpdateGradeWhenCalled() {
+        final Long assignmentID = 99999L;
+        final String grade = "some grade";
+        final Long gradedBy = 99999L;
+        final Assignment assignment = new Assignment();
+        when(assignmentRepository.findById(assignmentID)).thenReturn(Optional.of(assignment));
+        when(assignmentRepository.findByGradedBy(gradedBy)).thenReturn(Optional.of(assignment));
+        ArgumentCaptor<Assignment> captor = ArgumentCaptor.forClass(Assignment.class);
+        when(assignmentRepository.save(captor.capture())).thenReturn(assignment);
+        assertDoesNotThrow(() -> service.updateGrade(assignmentID, grade, gradedBy));
+        assertEquals(assignment, captor.getValue());
+    }
+    
+    @Test
+    void itShouldThrowWhenAssignmentIdIsEmpty() {
+        final Long assignmentId = 999999L;
+        final String grade = "some grade";
+        final Long gradedBy = 99999L;
+        when(assignmentRepository.findById(assignmentId)).thenReturn(Optional.empty());
+        assertThrows(ResponseStatusException.class,
+                () -> service.updateGrade(assignmentId, grade, gradedBy));
+    }
+    
     
 }

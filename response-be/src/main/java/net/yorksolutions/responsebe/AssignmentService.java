@@ -17,7 +17,7 @@ public class AssignmentService {
     public AssignmentService(@NonNull AssignmentRepository assignmentRepository) {
         this.assignmentRepository = assignmentRepository;
     }
-    
+
 //    public AssignmentsService(AssignmentsRepository assignmentRepository) {
 //        this.assignmentRepository = assignmentRepository;
 //    }
@@ -26,12 +26,28 @@ public class AssignmentService {
      * Code Starts Here *
      ********************/
     
-    public void addAssignment(Long assignedTo,Long quizTemplateId) {
+    public void addAssignment(Long assignedTo, Long quizTemplateId) {
         Optional<Assignment> assignment = assignmentRepository.findByQuizTemplateId(quizTemplateId);
         if (assignment.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
         assignmentRepository.save(new Assignment(assignedTo, quizTemplateId));
+    }
+    
+    public void updateGrade(Long assignmentId, String grade, Long gradedBy) {
+        Optional<Assignment> assignment = assignmentRepository.findById(assignmentId);
+        Optional<Assignment> whoGraded = assignmentRepository.findByGradedBy(gradedBy);
+        if (assignment.isEmpty() || whoGraded.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        } else {
+            assignment.get().grade = grade;
+            assignment.get().gradedBy = gradedBy;
+            assignmentRepository.save(assignment.get());
+        }
+    }
+    
+    public Optional<Assignment> getAllGradedResponses(Long assignedTo, String grade) {
+        return assignmentRepository.findAllByAssignedToAndGrade(assignedTo, grade);
     }
     
 }
