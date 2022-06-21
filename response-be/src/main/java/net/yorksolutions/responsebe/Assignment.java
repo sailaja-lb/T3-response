@@ -36,6 +36,7 @@ public class Assignment {
     // TODO add AssignmentTable to Sheets
     
     // assigned to
+    @JsonProperty
     @OneToMany(cascade = ALL)
     List<Response> responses;
     
@@ -45,8 +46,8 @@ public class Assignment {
     public Assignment() {
     
     }
-    public Assignment(Long quizTemplateId) {
-        this.quizTemplateId = quizTemplateId;
+    public Assignment(Long assignmentId) {
+        this.assignmentId = assignmentId;
         this.responses = new ArrayList<>();
     }
     

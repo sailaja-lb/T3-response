@@ -34,7 +34,7 @@ public class Response {
     Assignment assignment;
 
 
-    public Response(Long assignmentId, Long quizId, String questionText, String response, Boolean completed) {
+    public Response(Long assignmentId, Long questionId, String questionText, String response, Boolean completed) {
         this.assignmentId = assignmentId;
         this.questionId = questionId;
         this.questionText = questionText;
