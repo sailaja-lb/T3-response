@@ -26,6 +26,12 @@ public class ResponseController {
 //        return responseService.deleteResponseForAssignment(assignmentId);
 //    }
 
+    @GetMapping("/updateIsComplete")
+    @CrossOrigin
+    public void updateIsComplete(@RequestParam Long assignmentId) {
+        responseService.updateIsComplete(assignmentId);
+    }
+
     @DeleteMapping("/deleteResponsesForAssignment/{assignmentId}")
     @CrossOrigin
     public void deleteResponsesForAssignment(Long assignmentId) {

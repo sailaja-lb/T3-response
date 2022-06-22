@@ -34,6 +34,53 @@ public class ResponseService {
         return responseRepository.findAllByCompletedIsTrue();
     }
 
+    public Assignment addResponse(Long assignmentId, Long questionId, String questionText, String response, Boolean completed) {
+        Optional<Assignment> assignmentOp = assignmentRepository.findById(assignmentId);
+        ResponseStatusException exception = new ResponseStatusException(HttpStatus.CONFLICT, "Assignment already exists. Please try a new one.");
+
+        if (assignmentRepository.findById(assignmentId).isEmpty()) {
+            throw exception;
+        }
+        Assignment assignment = assignmentOp.get();
+        Response responseObj = new Response(assignmentId, questionId, questionText, response, completed);
+
+        assignment.addResponse(responseObj);
+        return assignmentRepository.save(assignment);
+    }
+
+//    public Assignment addResponse(Response responseO) {
+//        Optional<Assignment> assignmentOp = assignmentRepository.findById(responseO.assignmentId);
+//        ResponseStatusException exception = new ResponseStatusException(HttpStatus.CONFLICT, "Assignment already exists. Please try a new one.");
+//
+//        if (assignmentOp.isEmpty()) {
+//            throw exception;
+//        }
+//        Assignment assignment = assignmentOp.get();
+//
+//        assignment.addResponse(responseO);
+//        return assignmentRepository.save(assignment);
+//    }
+
+    public void updateIsComplete(Long assignmentId) {
+        Optional<Assignment> assignmentOp = assignmentRepository.findById(assignmentId);
+        ResponseStatusException exception = new ResponseStatusException(HttpStatus.NOT_FOUND, "Assignment not found.");
+
+        if (assignmentOp.isEmpty()) {
+            throw exception;
+        }
+        // if does exist, update all responses so that completed is true
+        Assignment assignment = assignmentOp.get();
+        for (Response response : assignment.responses) {
+            response.completed = true;
+        }
+        assignmentRepository.save(assignment);
+    }
+
+    public void deleteResponsesForAssignment(Long assignmentId) {
+
+//        responseRepository.deleteAallByAssignmentId(assignmentId);
+    }
+
 //    public Response deleteResponsesForAssignment(Long assignmentId) {
 //        ResponseStatusException exception = new ResponseStatusException(HttpStatus.BAD_REQUEST,
 //        "Cannot delete an assignment that does not exist");

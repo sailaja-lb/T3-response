@@ -51,4 +51,45 @@ public class ResponseControllerTests {
 
         assertArrayEquals(responses, endpointResponse.getBody());
     }
+
+    // ******** test addResponse ********
+    @Test
+    void itShouldCallAddResponseWithAssignmentIdQuestionIdQuestionTextResponseAndCompletedAndReturnAssignment() {
+//        final Long assignmentId = 0L;
+//        final Long questionId = 0L;
+//        final String questionText = "q text";
+//        final String response = "a response";
+//        final boolean completed = true;
+        final Response newResponse1 = new Response(1L, 1L, "q1", "r1", true);
+        final Response newResponse2 = new Response(2L, 2L, "q2", "r2", false);
+        newResponse1.setId(1L);
+        newResponse2.setId(2L);
+        final Response[] responses = new Response[] {newResponse1, newResponse2};
+        final List<Response> responseList = List.of(responses);
+        final Assignment expected = new Assignment("A", 1L, 1L, 1L, responseList);
+
+        final String url = "http://localhost:" + port + "/addResponse";
+        TestRestTemplate rest = new TestRestTemplate();
+
+//        final ArgumentCaptor<> captor = ArgumentCaptor.forClass(HttpServletRequest.class);
+
+        when(responseService.addResponse(1L, 1L, "q1", "r1", true)).thenReturn(expected);
+        final ResponseEntity<Assignment> assignmentEnt = rest.getForEntity(url, Assignment.class);
+
+        assertEquals(expected, assignmentEnt.getBody());
+    }
+
+    // ******** test updateIsComplete ********
+    @Test
+    void itShouldCallUpdateIsCompleteWithAssignmentId() {
+        Long assignmentId = 1L;
+        String url = "http://localhost:" + port + "/updateIsComplete?assignmentId=" + assignmentId;
+        TestRestTemplate rest = new TestRestTemplate();
+        ResponseStatusException exception = new ResponseStatusException(HttpStatus.ACCEPTED);
+
+        doThrow(exception).when(responseService).updateIsComplete(assignmentId);
+        final ResponseEntity<Void> response = rest.getForEntity(url, Void.class);
+
+        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+    }
 }
