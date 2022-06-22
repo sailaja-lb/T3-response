@@ -27,21 +27,11 @@ public class Assignment {
     Long assignedTo; // user's generated id
     
     @JsonProperty
-    Long quizTemplateId; // Id from quizTemplate
+    Long quizTemplateId; // Id from quizTemplate, needs to be linked
     
-    
-    // Join table for assignments and response
-    
-    // TODO update data types in shared Sheets and Docs
-    // TODO add AssignmentTable to Sheets
-    
-    // assigned to
     @JsonProperty
     @OneToMany(cascade = ALL)
     List<Response> responses;
-    
-    // quiz template id
-    // @OneToMany(cascade = ALL,)
     
     public Assignment() {
     
@@ -51,7 +41,6 @@ public class Assignment {
         this.assignmentId = assignmentId;
         this.responses = new ArrayList<>();
     }
-    //test
     
     public Assignment(String grade, Long gradedBy, Long assignedTo,
                       Long quizTemplateId, List<Response> responses) {

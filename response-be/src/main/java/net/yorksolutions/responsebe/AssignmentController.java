@@ -32,13 +32,6 @@ public class AssignmentController {
                             @RequestParam Long gradedBy) {
         service.updateGrade(assignmentId, grade, gradedBy);
     }
-
-//    @PostMapping("/updateGradePOST")
-//    @CrossOrigin
-//    public void updateGradePOST(@RequestBody Long assignmentId, @RequestParam String grade,
-//                            @RequestParam Long gradedBy) {
-//        service.updateGrade(assignmentId, grade, gradedBy);
-//    }
     
     @GetMapping("/getAllGradedResponses")
     @CrossOrigin
