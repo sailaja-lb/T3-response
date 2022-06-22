@@ -55,6 +55,4 @@ public class AssignmentController {
         return service.getAssignment(assignedTo, quizTemplateId);
     }
     
-    // getAssignment by assignedTo and quizTemplateId
-    
 }
