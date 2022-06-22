@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/")
 public class AssignmentController {
@@ -37,13 +39,20 @@ public class AssignmentController {
     @CrossOrigin
     public Iterable<Assignment> getAllGradedResponses(@RequestParam Long assignedTo,
                                                       @RequestParam String grade) {
-        return service.getAllGradedResponses(assignedTo, grade);
+        return service.getAllGradedAssignments(assignedTo, grade);
     }
     
     @GetMapping("/getAllAssignments")
     @CrossOrigin
-    public Iterable<Assignment> getProcesses() {
+    public Iterable<Assignment> getAllAssignments() {
         return service.getAllAssignments();
+    }
+    
+    @GetMapping("/getAssignment")
+    @CrossOrigin
+    public Optional<Assignment> getAssignment(@RequestParam Long assignedTo,
+                                              @RequestParam Long quizTemplateId) {
+        return service.getAssignment(assignedTo, quizTemplateId);
     }
     
     // getAssignment by assignedTo and quizTemplateId

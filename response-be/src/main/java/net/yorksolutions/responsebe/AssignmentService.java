@@ -41,7 +41,7 @@ public class AssignmentService {
         }
     }
     
-    public Iterable<Assignment> getAllGradedResponses(Long assignedTo, String grade) {
+    public Iterable<Assignment> getAllGradedAssignments(Long assignedTo, String grade) {
         return assignmentRepository.findAllByAssignedToAndGrade(assignedTo, grade);
     }
     
@@ -49,5 +49,10 @@ public class AssignmentService {
         return assignmentRepository.findAll();
     }
     
+    // getAssignment by assignedTo and quizTemplateId
+    public Optional<Assignment> getAssignment(Long assignedTo, Long quizTemplateId) {
+        return assignmentRepository.findByAssignedToAndQuizTemplateId(assignedTo,
+                quizTemplateId);
+    }
     
 }

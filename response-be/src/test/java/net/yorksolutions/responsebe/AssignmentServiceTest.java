@@ -44,7 +44,6 @@ class AssignmentServiceTest {
     @Test
     void itShouldThrowWhenNoAssignment() {
         final Long assignedTo = 99999L;
-        final Long assignmentId = 9999L;
         final Long quizTemplateId = 9999L;
         when(assignmentRepository.findByQuizTemplateId(quizTemplateId)).thenReturn(Optional.empty());
         assertThrows(ResponseStatusException.class, () -> service.addAssignment(assignedTo,
@@ -75,6 +74,19 @@ class AssignmentServiceTest {
     }
     
     @Test
+    void itShouldReturnAllGradedAssignments() {
+        final Long assignedTo = 99999L;
+        final String grade = "some grade";
+        final ArrayList<Assignment> assignments = new ArrayList<>();
+        assignments.add(new Assignment(assignedTo, grade));
+        assignments.add(new Assignment(assignedTo, grade));
+        assignments.add(new Assignment(assignedTo, grade));
+        assignments.add(new Assignment(assignedTo, grade));
+        when(assignmentRepository.findAllByAssignedToAndGrade(assignedTo, grade)).thenReturn(assignments);
+        assertEquals(assignments, service.getAllGradedAssignments(assignedTo, grade));
+    }
+    
+    @Test
     void itShouldReturnAllAssignments() {
         final ArrayList<Assignment> assignments = new ArrayList<>();
         assignments.add(new Assignment());
@@ -83,5 +95,16 @@ class AssignmentServiceTest {
         assignments.add(new Assignment());
         when(assignmentRepository.findAll()).thenReturn(assignments);
         assertEquals(assignments, service.getAllAssignments());
+    }
+    
+    @Test
+    void itShouldReturnAssignment() {
+        final Long assignedTo = 99999L;
+        final Long quizTemplateId = 9999L;
+        final Assignment assignment = new Assignment(assignedTo,
+                quizTemplateId);
+        when(assignmentRepository.findByAssignedToAndQuizTemplateId(assignedTo,
+                quizTemplateId)).thenReturn(Optional.of((assignment)));
+        assertEquals(Optional.of(assignment), service.getAssignment(assignedTo, quizTemplateId));
     }
 }
