@@ -54,11 +54,12 @@ class AssignmentControllerTest {
         final Long assignedTo = 99999L;
         final Long assignmentId = 9999L;
         final Long quizTemplateId = 9999L;
+        final Assignment body = new Assignment();
         String url = "http://localhost:" + port + "/addAssignment?assignedTo=" + assignedTo +
                 "&assignmentId=" + assignmentId + "&quizTemplateId=" + quizTemplateId;
         doThrow(new ResponseStatusException(HttpStatus.ACCEPTED)).when(service)
                 .addAssignment(assignedTo, quizTemplateId);
-        final ResponseEntity<Void> response = rest.getForEntity(url, Void.class);
+        final ResponseEntity<Void> response = rest.postForEntity(url, body, Void.class);
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
     
@@ -67,11 +68,12 @@ class AssignmentControllerTest {
         final Long assignmentId = 999999L;
         final String grade = "some grade";
         final Long gradedBy = 99999999L;
+        final Assignment body = new Assignment();
         String url = "http://localhost:" + port + "/updateGrade?assignmentId=" + assignmentId +
                 "&grade=" + grade + "&gradedBy=" + gradedBy;
         doThrow(new ResponseStatusException(HttpStatus.ACCEPTED)).when(service)
                 .updateGrade(assignmentId, grade, gradedBy);
-        final ResponseEntity<Void> response = rest.getForEntity(url, Void.class);
+        final ResponseEntity<Void> response = rest.postForEntity(url, body, Void.class);
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
     
