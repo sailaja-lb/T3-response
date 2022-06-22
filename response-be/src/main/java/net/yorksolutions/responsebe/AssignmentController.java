@@ -19,14 +19,14 @@ public class AssignmentController {
         this.service = service;
     }
     
-    @GetMapping("/addAssignment")
+    @PostMapping("/addAssignment")
     @CrossOrigin
     public void addAssignment(@RequestParam Long assignedTo,
                               @RequestParam Long quizTemplateId) {
         service.addAssignment(assignedTo, quizTemplateId);
     }
     
-    @GetMapping("/updateGrade")
+    @PostMapping("/updateGrade")
     @CrossOrigin
     public void updateGrade(@RequestParam Long assignmentId, @RequestParam String grade,
                             @RequestParam Long gradedBy) {
