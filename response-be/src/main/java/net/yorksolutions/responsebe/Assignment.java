@@ -27,7 +27,11 @@ public class Assignment {
     Long assignedTo; // user's generated id
     
     @JsonProperty
-    Long quizTemplateId; // Id from quizTemplate, needs to be linked
+    Long quizTemplateId; // Id from quizTemplate
+
+//    @JsonProperty
+//    @OneToMany(cascade = ALL)
+//    List<Quiz> quiz;
     
     @JsonProperty
     @OneToMany(cascade = ALL)
