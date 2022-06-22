@@ -77,17 +77,31 @@ public class ResponseServiceTests {
         assertEquals(assignment, captor.getValue());
     }
 
+    // ******** test updateIsComplete ********
+    @Test   // failure
+    void itShouldThrowIfAssignmentIdDoesNotExistWhenUpdateIsComplete() {
+        final Long assignmentId = 0L;
+        HttpStatus expected = HttpStatus.NOT_FOUND;
 
-//    void itShouldAddNewResponseWhenResponseToAddDoesNotExistAlready() {
-//        Long assignmentId = 0L;
-//        Long questionId = 0L;
-//        String questionText = "How are you?";
-//        String response = "a response";
-//        Boolean completed = true;
-//        Response expected = new Response(assignmentId, questionId, questionText, response, completed);
-//
-//        ArgumentCaptor<Response> captor = ArgumentCaptor.for
-//    }
+        when(assignmentRepository.findById(assignmentId)).thenReturn(Optional.empty());
+        final ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+                () -> responseService.updateIsComplete(assignmentId));
+        assertEquals(expected, exception.getStatus());
+    }
+
+    @Test   // success
+    void itShouldUpdateCompletedToTrueForAllResponsesWithTheResponseIdWhenUpdateIsCompleteIsCalled() {
+        final Long assignmentId = 0L;
+
+        Assignment expected = new Assignment(assignmentId);
+        ArgumentCaptor<Assignment> captor = ArgumentCaptor.forClass(Assignment.class);
+
+        when(assignmentRepository.findById(assignmentId)).thenReturn(Optional.of(expected));
+        when(assignmentRepository.save(captor.capture())).thenReturn(new Assignment());
+
+        assertDoesNotThrow(() -> responseService.updateIsComplete(assignmentId));
+        assertEquals(expected, captor.getValue());
+    }
 
 
     // ******** test deleteResponsesForAssignment ********
