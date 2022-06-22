@@ -77,30 +77,32 @@ class AssignmentControllerTest {
     @Test
     void itShouldReturnAllGradedAssignments() {
         final Long assignedTo = 99999L;
-        final String grade = "some grade";
-        final Iterable<Assignment> gradedResponses = new ArrayList<>();
+        final ArrayList<Assignment> isAssignedTo = new ArrayList<>();
         String url =
-                "http://localhost:" + port + "/getAllGradedResponses?assignedTo=" + assignedTo +
-                        "&grade=" + grade;
-        when(controller.getAllGradedResponses(assignedTo, grade)).thenReturn(gradedResponses);
+                "http://localhost:" + port + "/getAllGradedResponses?assignedTo=" + assignedTo;
+        
+        // TODO add 2 assignments, use set/add to add to fields
+        // TODO set assignments to array [{},{}]
+        
+        when(controller.getAllGradedAssignments(assignedTo)).thenReturn(isAssignedTo);
         final ResponseEntity<ArrayList> response = rest.getForEntity(url, ArrayList.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(true, response.hasBody());
-        assertEquals(gradedResponses, response.getBody());
+//        assertArrayEquals(isAssignedTo, response.getBody());
     }
     
     @Test
     void itShouldReturnAllAssignments() {
         final Long assignedTo = 99999L;
         final String grade = "some grade";
-        final Iterable<Assignment> responses = new ArrayList<>();
+        final Iterable<Assignment> assignments = new ArrayList<>();
         String url =
                 "http://localhost:" + port + "/getAllAssignments";
-        when(controller.getAllAssignments()).thenReturn(responses);
+        when(controller.getAllAssignments()).thenReturn(assignments);
         final ResponseEntity<ArrayList> response = rest.getForEntity(url, ArrayList.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(true, response.hasBody());
-        assertEquals(responses, response.getBody());
+        assertEquals(assignments, response.getBody());
     }
     
     @Test

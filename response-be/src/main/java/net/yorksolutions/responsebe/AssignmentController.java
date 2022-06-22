@@ -35,11 +35,10 @@ public class AssignmentController {
         service.updateGrade(assignmentId, grade, gradedBy);
     }
     
-    @GetMapping("/getAllGradedResponses")
+    @GetMapping("/getAllGradedAssignments")
     @CrossOrigin
-    public Iterable<Assignment> getAllGradedResponses(@RequestParam Long assignedTo,
-                                                      @RequestParam String grade) {
-        return service.getAllGradedAssignments(assignedTo, grade);
+    public Iterable<Assignment> getAllGradedAssignments(@RequestParam Long assignedTo) {
+        return service.getAllGradedAssignments(assignedTo);
     }
     
     @GetMapping("/getAllAssignments")

@@ -20,6 +20,7 @@ public class Assignment {
     @JsonProperty
     String grade;
     
+    
     @JsonProperty
     Long gradedBy; // recruiter's generated id
     

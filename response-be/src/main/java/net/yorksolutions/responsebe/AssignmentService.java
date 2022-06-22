@@ -41,8 +41,17 @@ public class AssignmentService {
         }
     }
     
-    public Iterable<Assignment> getAllGradedAssignments(Long assignedTo, String grade) {
-        return assignmentRepository.findAllByAssignedToAndGrade(assignedTo, grade);
+    public Iterable<Assignment> getAllGradedAssignments(Long assignedTo) {
+        Iterable<Assignment> isAssignedTo =
+                assignmentRepository.findAllByAssignedToAndGradeNotNull(assignedTo);
+//        Iterable<Assignment> hasGrade = assignmentRepository.findAllByGradeNotNull(assignedTo);
+        if (isAssignedTo == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+//        } else if (hasGrade == null) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        } else {
+            return assignmentRepository.findAllByAssignedToAndGradeNotNull(assignedTo);
+        }
     }
     
     public Iterable<Assignment> getAllAssignments() {
