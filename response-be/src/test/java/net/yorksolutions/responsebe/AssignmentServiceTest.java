@@ -76,14 +76,13 @@ class AssignmentServiceTest {
     @Test
     void itShouldReturnAllGradedAssignments() {
         final Long assignedTo = 99999L;
-        final String grade = "some grade";
         final ArrayList<Assignment> assignments = new ArrayList<>();
-        assignments.add(new Assignment(assignedTo, grade));
-        assignments.add(new Assignment(assignedTo, grade));
-        assignments.add(new Assignment(assignedTo, grade));
-        assignments.add(new Assignment(assignedTo, grade));
-        when(assignmentRepository.findAllByAssignedToAndGrade(assignedTo, grade)).thenReturn(assignments);
-        assertEquals(assignments, service.getAllGradedAssignments(assignedTo, grade));
+        assignments.add(new Assignment(assignedTo));
+        assignments.add(new Assignment(assignedTo));
+        assignments.add(new Assignment(assignedTo));
+        assignments.add(new Assignment(assignedTo));
+        when(assignmentRepository.findAllByAssignedToAndGradeNotNull(assignedTo)).thenReturn(assignments);
+        assertEquals(assignments, service.getAllGradedAssignments(assignedTo));
     }
     
     @Test
