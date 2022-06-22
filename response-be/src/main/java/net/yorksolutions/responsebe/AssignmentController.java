@@ -40,5 +40,12 @@ public class AssignmentController {
         return service.getAllGradedResponses(assignedTo, grade);
     }
     
+    @GetMapping("/getAllAssignments")
+    @CrossOrigin
+    public Iterable<Assignment> getProcesses() {
+        return service.getAllAssignments();
+    }
+    
     // getAssignment by assignedTo and quizTemplateId
+    
 }

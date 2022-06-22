@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,7 +58,6 @@ class AssignmentServiceTest {
         final Long gradedBy = 99999L;
         final Assignment assignment = new Assignment();
         when(assignmentRepository.findById(assignmentID)).thenReturn(Optional.of(assignment));
-        when(assignmentRepository.findByGradedBy(gradedBy)).thenReturn(Optional.of(assignment));
         ArgumentCaptor<Assignment> captor = ArgumentCaptor.forClass(Assignment.class);
         when(assignmentRepository.save(captor.capture())).thenReturn(assignment);
         assertDoesNotThrow(() -> service.updateGrade(assignmentID, grade, gradedBy));
@@ -74,5 +74,14 @@ class AssignmentServiceTest {
                 () -> service.updateGrade(assignmentId, grade, gradedBy));
     }
     
-    
+    @Test
+    void itShouldReturnAllAssignments() {
+        final ArrayList<Assignment> assignments = new ArrayList<>();
+        assignments.add(new Assignment());
+        assignments.add(new Assignment());
+        assignments.add(new Assignment());
+        assignments.add(new Assignment());
+        when(assignmentRepository.findAll()).thenReturn(assignments);
+        assertEquals(assignments, service.getAllAssignments());
+    }
 }
