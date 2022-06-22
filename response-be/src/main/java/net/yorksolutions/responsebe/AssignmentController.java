@@ -40,6 +40,5 @@ public class AssignmentController {
         return service.getAllGradedResponses(assignedTo, grade);
     }
     
-    // TODO ask Leng to show how to use Iterable<Assignment>get all assignments for a user
-    
+    // getAssignment by assignedTo and quizTemplateId
 }
