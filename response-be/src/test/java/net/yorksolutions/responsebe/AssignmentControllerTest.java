@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doThrow;
@@ -41,10 +42,6 @@ class AssignmentControllerTest {
     }
     
     final TestRestTemplate rest = new TestRestTemplate();
-    
-    /*********
-     * TESTS *
-     *********/
     
     /***************************
      * createAssignment TESTS *
@@ -78,7 +75,7 @@ class AssignmentControllerTest {
     }
     
     @Test
-    void itShouldReturnAllGradedResponses() {
+    void itShouldReturnAllGradedAssignments() {
         final Long assignedTo = 99999L;
         final String grade = "some grade";
         final Iterable<Assignment> gradedResponses = new ArrayList<>();
@@ -86,11 +83,39 @@ class AssignmentControllerTest {
                 "http://localhost:" + port + "/getAllGradedResponses?assignedTo=" + assignedTo +
                         "&grade=" + grade;
         when(controller.getAllGradedResponses(assignedTo, grade)).thenReturn(gradedResponses);
-        
         final ResponseEntity<ArrayList> response = rest.getForEntity(url, ArrayList.class);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(true, response.hasBody());
         assertEquals(gradedResponses, response.getBody());
+    }
+    
+    @Test
+    void itShouldReturnAllAssignments() {
+        final Long assignedTo = 99999L;
+        final String grade = "some grade";
+        final Iterable<Assignment> responses = new ArrayList<>();
+        String url =
+                "http://localhost:" + port + "/getAllAssignments";
+        when(controller.getAllAssignments()).thenReturn(responses);
+        final ResponseEntity<ArrayList> response = rest.getForEntity(url, ArrayList.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(true, response.hasBody());
+        assertEquals(responses, response.getBody());
+    }
+    
+    @Test
+    void itShouldReturnAssignment() {
+        final Long assignedTo = 99999L;
+        final Long quizTemplateId = 99999L;
+        final Assignment assignment = new Assignment(assignedTo, quizTemplateId);
+        String url =
+                "http://localhost:" + port + "/getAssignment?assignedTo=" + assignedTo +
+                        "&quizTemplateId=" + quizTemplateId;
+        when(controller.getAssignment(assignedTo, quizTemplateId)).thenReturn(Optional.of(assignment));
+        final ResponseEntity<Assignment> response = rest.getForEntity(url, Assignment.class);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(true, response.hasBody());
+        assertEquals(assignment, response.getBody());
     }
     
 }

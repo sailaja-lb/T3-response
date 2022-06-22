@@ -15,4 +15,6 @@ public interface AssignmentRepository extends CrudRepository<Assignment, Long> {
     Iterable<Assignment> findAllByAssignedToAndGrade(Long assignedTo, String grade);
     
     Optional<Assignment> findByGradedBy(Long gradedBy);
+    
+    Optional<Assignment> findByAssignedToAndQuizTemplateId(Long assignedTo, Long quizTemplateId);
 }
