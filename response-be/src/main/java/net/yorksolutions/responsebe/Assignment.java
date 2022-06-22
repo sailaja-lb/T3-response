@@ -28,10 +28,6 @@ public class Assignment {
     
     @JsonProperty
     Long quizTemplateId; // Id from quizTemplate
-
-//    @JsonProperty
-//    @OneToMany(cascade = ALL)
-//    List<Quiz> quiz;
     
     @JsonProperty
     @OneToMany(cascade = ALL)
