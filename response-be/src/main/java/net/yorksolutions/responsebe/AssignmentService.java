@@ -11,16 +11,12 @@ import java.util.Optional;
 @Service
 public class AssignmentService {
     
-    private AssignmentRepository assignmentRepository;
+    final AssignmentRepository assignmentRepository;
     
     @Autowired
     public AssignmentService(@NonNull AssignmentRepository assignmentRepository) {
         this.assignmentRepository = assignmentRepository;
     }
-
-//    public AssignmentsService(AssignmentsRepository assignmentRepository) {
-//        this.assignmentRepository = assignmentRepository;
-//    }
     
     /********************
      * Code Starts Here *
@@ -47,6 +43,10 @@ public class AssignmentService {
     
     public Iterable<Assignment> getAllGradedResponses(Long assignedTo, String grade) {
         return assignmentRepository.findAllByAssignedToAndGrade(assignedTo, grade);
+    }
+    
+    public Iterable<Assignment> getAllAssignments() {
+        return assignmentRepository.findAll();
     }
     
     
