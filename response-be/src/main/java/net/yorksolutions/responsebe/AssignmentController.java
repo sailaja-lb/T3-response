@@ -59,6 +59,5 @@ public class AssignmentController {
     public void deleteAssignment(@RequestParam Long assignmentId) {
         service.deleteAssignment(assignmentId);
     }
-    // TODO make a delete Assignment
     
 }
