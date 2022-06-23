@@ -146,48 +146,4 @@ public class ResponseServiceTests {
 
         assertDoesNotThrow(() -> responseService.deleteResponsesForAssignment(assignmentId));
     }
-
-//    @Test   // failure
-//    void itShouldThrowNotFoundWhenNoResponsesForAssignmentId() {
-//        Long assignmentId = 1L;
-//        Response newResponse1 = new Response(1L, 1L, "q1", "r1", true);
-//        Response newResponse2 = new Response(2L, 2L, "q2", "r2", false);
-//        Response[] responses = new Response[] {newResponse1, newResponse2};
-//        List<Response> expected = List.of(responses);
-//
-//        when(responseRepository.findAll()).thenReturn(expected);
-//
-
-//
-//        HttpStatus expected = HttpStatus.NOT_FOUND;
-//        Iterable<Response> responseList = new Lis
-//
-//        when(responseRepository.findAllByAssignmentId(assignmentId)).thenReturn(false);
-//
-//        final ResponseStatusException exception = assertThrows(ResponseStatusException.class,
-//                () -> responseService.deleteResponse(id));
-//        assertEquals(expected, exception.getStatus());
-//    }
-
-//    @Test   // success
-//    void itShouldDeleteResponsesWhenAtLeastOneResponseFoundForAssignment() {
-//        Long assignmentId = 2L;
-//        Long questionId = 0L;
-//        String questionText = "q?";
-//        String response = "r1";
-//        Boolean completed = true;
-//        Response r1 = new Response(assignmentId, questionId, questionText, response, completed);
-//        r1.setId(1L);
-//        ArgumentCaptor<Long> captor = ArgumentCaptor.forClass(Long.class);
-//        ArrayList<Response> responses = new ArrayList<>();
-//        responses.add(r1);
-//
-//        when(responseRepository.findAllByAssignmentId(assignmentId)).thenReturn(responses);
-//        when(responseRepository.countByAssignmentId(assignmentId)).thenReturn(1);
-//        doNothing().when(responseRepository).deleteById(captor.capture());
-//
-////        assertDoesNotThrow(() -> responseService.deleteResponsesForAssignment(assignmentId));
-//        responseService.deleteResponsesForAssignment(assignmentId);
-//        assertEquals(1L, captor.getValue());
-//    }
 }
