@@ -58,26 +58,21 @@ public class ResponseControllerTests {
 
     // ******** test addResponse ********
     @Test
-    void itShouldCallAddResponseWithAssignmentIdQuestionIdQuestionTextResponseAndCompletedAndReturnAssignment() {
-        final Response newResponse1 = new Response(1L, 1L, "q1", "r1", true);
-//        final Response newResponse2 = new Response(2L, 2L, "q2", "r2", false);
-        newResponse1.setId(1L);
-//        newResponse2.setId(2L);
-        final Response[] responses = new Response[] {newResponse1};
-        final List<Response> responseList = List.of(responses);
+    void itShouldCallAddResponseWithAssignmentIdQuestionIdQuestionTextResponseAndCompleted() {
+        final Long assignmentId = 1L;
+        final Long questionId = 1L;
+        final String questionText = "q text";
+        final String response = "r text";
+        final Boolean completed = false;
+
         final HttpStatus expectedStatus = HttpStatus.ACCEPTED;
 
-//        final Assignment expected = new Assignment("A", 1L, 1L, 1L, responseList);
-        final Assignment expected = new Assignment(1L);
-        expected.responses.add(newResponse1);
-
-        final String url = "http://localhost:" + port + "/addResponse";
+        final String url = "http://localhost:" + port + "/addResponse?assignmentId=" + assignmentId + "&questionId=" + questionId + "&questionText=" + questionText + "&response=" + response + "&completed=" + completed;
         TestRestTemplate rest = new TestRestTemplate();
-        doThrow(new ResponseStatusException(expectedStatus)).when(responseService).addResponse(1L, 1L, "q1", "r1", true);
-        when(responseService.addResponse(1L, 1L, "q1", "r1", true)).thenReturn(expected);
+        doThrow(new ResponseStatusException(expectedStatus)).when(responseService).addResponse(assignmentId, questionId, questionText, response, completed);
         final ResponseEntity<Assignment> assignmentEnt = rest.getForEntity(url, Assignment.class);
 
-        assertEquals(expected, assignmentEnt.getBody());
+        assertEquals(expectedStatus, assignmentEnt.getStatusCode());
     }
 
     // ******** test updateIsComplete ********

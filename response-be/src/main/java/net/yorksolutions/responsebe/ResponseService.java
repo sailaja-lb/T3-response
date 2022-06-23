@@ -37,7 +37,7 @@ public class ResponseService {
 
     public Assignment addResponse(Long assignmentId, Long questionId, String questionText, String response, Boolean completed) {
         Optional<Assignment> assignmentOp = assignmentRepository.findById(assignmentId);
-        ResponseStatusException exception = new ResponseStatusException(HttpStatus.CONFLICT, "Assignment already exists. Please try a new one.");
+        ResponseStatusException exception = new ResponseStatusException(HttpStatus.NOT_FOUND, "No assignment exists with the given id.");
 
         if (assignmentRepository.findById(assignmentId).isEmpty()) {
             throw exception;
@@ -46,21 +46,9 @@ public class ResponseService {
         Response responseObj = new Response(assignmentId, questionId, questionText, response, completed);
 
         assignment.addResponse(responseObj);
-        return assignmentRepository.save(assignment);
+        assignmentRepository.save(assignment);
+        return assignment;
     }
-
-//    public Assignment addResponse(Response responseO) {
-//        Optional<Assignment> assignmentOp = assignmentRepository.findById(responseO.assignmentId);
-//        ResponseStatusException exception = new ResponseStatusException(HttpStatus.CONFLICT, "Assignment already exists. Please try a new one.");
-//
-//        if (assignmentOp.isEmpty()) {
-//            throw exception;
-//        }
-//        Assignment assignment = assignmentOp.get();
-//
-//        assignment.addResponse(responseO);
-//        return assignmentRepository.save(assignment);
-//    }
 
     public void updateIsComplete(Long assignmentId) {
         Optional<Assignment> assignmentOp = assignmentRepository.findById(assignmentId);
