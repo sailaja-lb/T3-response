@@ -103,8 +103,48 @@ public class ResponseServiceTests {
         assertEquals(expected, captor.getValue());
     }
 
-
     // ******** test deleteResponsesForAssignment ********
+    @Test   // failure - no assignment found
+    void itShouldThrowNotFoundWhenNoAssignmentFoundWithTheGivenAssignmentIdWhendeleteResponsesForAssignment() {
+        final Long assignmentId = 0L;
+        HttpStatus expected = HttpStatus.NOT_FOUND;
+
+        when(assignmentRepository.findById(assignmentId)).thenReturn(Optional.empty());
+        final ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+                () -> responseService.deleteResponsesForAssignment(assignmentId));
+        assertEquals(expected, exception.getStatus());
+    }
+
+
+    @Test   // failure - no responses found for assignmentId
+    void itShouldThrowNotFoundWhenNoResponsesFoundForTheGivenAssignmentId() {
+        final Long assignmentId = 1L;
+        final Assignment assignment = new Assignment(assignmentId);
+        final HttpStatus expected = HttpStatus.NOT_FOUND;
+
+        when(assignmentRepository.findById(assignmentId)).thenReturn(Optional.of(assignment));
+        final ResponseStatusException exception = assertThrows(ResponseStatusException.class,
+                () -> responseService.deleteResponsesForAssignment(assignmentId));
+
+        assertEquals(expected, exception.getStatus());
+    }
+
+    @Test   // success
+    void itShouldDeleteAllResponsesAssociatedWithTheGivenAssignmentIdWhenDeleteAllByAssignmentId() {
+        final Long assignmentId = 1L;
+        final Assignment assignment = new Assignment(assignmentId);
+        Response newResponse1 = new Response(1L, 1L, "q1", "r1", true);
+        Response newResponse2 = new Response(2L, 2L, "q2", "r2", false);
+        Response[] responses = new Response[] {newResponse1, newResponse2};
+        assignment.responses = List.of(responses);
+        ArgumentCaptor<Long> captor = ArgumentCaptor.forClass(Long.class);
+
+        when(assignmentRepository.findById(assignmentId)).thenReturn(Optional.of(assignment));
+        doNothing().when(responseRepository).deleteAllByAssignmentId(captor.capture());
+
+        assertDoesNotThrow(() -> responseService.deleteResponsesForAssignment(assignmentId));
+    }
+
 //    @Test   // failure
 //    void itShouldThrowNotFoundWhenNoResponsesForAssignmentId() {
 //        Long assignmentId = 1L;

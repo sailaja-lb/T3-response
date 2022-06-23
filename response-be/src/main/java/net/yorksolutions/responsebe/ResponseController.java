@@ -32,9 +32,10 @@ public class ResponseController {
         responseService.updateIsComplete(assignmentId);
     }
 
-    @DeleteMapping("/deleteResponsesForAssignment/{assignmentId}")
+    @GetMapping("/deleteResponsesForAssignment/")
     @CrossOrigin
-    public void deleteResponsesForAssignment(Long assignmentId) {
+    public void deleteResponsesForAssignment(@RequestParam Long assignmentId) {
+        responseService.deleteResponsesForAssignment(assignmentId);
     }
 
     // ********* setters ********
