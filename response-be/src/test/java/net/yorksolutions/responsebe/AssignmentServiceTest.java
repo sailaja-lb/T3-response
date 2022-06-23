@@ -30,7 +30,6 @@ class AssignmentServiceTest {
     @Test
     void itShouldSaveNewAssignmentToUser() {
         final Long assignedTo = 99999L;
-        final Long assignmentId = 9999L;
         final Long quizTemplateId = 9999L;
         final Assignment assignment = new Assignment(quizTemplateId);
         when(assignmentRepository.findByQuizTemplateId(quizTemplateId))
@@ -40,16 +39,6 @@ class AssignmentServiceTest {
                 quizTemplateId));
         assertDoesNotThrow(() -> service.addAssignment(assignedTo, quizTemplateId));
         assertEquals(new Assignment(assignedTo, quizTemplateId), captor.getValue());
-    }
-    
-    @Test
-    void itShouldThrowWhenNoAssignment() {
-        final Long assignedTo = 99999L;
-        final Long quizTemplateId = 9999L;
-        when(assignmentRepository.findByQuizTemplateId(quizTemplateId))
-                .thenReturn(Optional.empty());
-        assertThrows(ResponseStatusException.class, () -> service.addAssignment(assignedTo,
-                quizTemplateId));
     }
     
     @Test
