@@ -4,18 +4,23 @@ import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -88,6 +93,20 @@ public class ResponseControllerTests {
         ResponseStatusException exception = new ResponseStatusException(HttpStatus.ACCEPTED);
 
         doThrow(exception).when(responseService).updateIsComplete(assignmentId);
+        final ResponseEntity<Void> response = rest.getForEntity(url, Void.class);
+
+        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+    }
+
+    // ******** test deleteResponsesForAssignment ********
+    @Test
+    void itShouldCallDeleteResponsesForAssignment() {
+        Long assignmentId = 1L;
+        String url = "http://localhost:" + port + "/deleteResponsesForAssignment?assignmentId=" + assignmentId;
+        TestRestTemplate rest = new TestRestTemplate();
+        ResponseStatusException exception = new ResponseStatusException(HttpStatus.ACCEPTED);
+
+        doThrow(exception).when(responseService).deleteResponsesForAssignment(assignmentId);
         final ResponseEntity<Void> response = rest.getForEntity(url, Void.class);
 
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
