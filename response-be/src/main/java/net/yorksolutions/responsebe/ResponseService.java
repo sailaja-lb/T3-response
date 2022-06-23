@@ -92,45 +92,4 @@ public class ResponseService {
         }
         responseRepository.deleteAllByAssignmentId(assignmentId);
     }
-
-//    public Response deleteResponsesForAssignment(Long assignmentId) {
-//        ResponseStatusException exception = new ResponseStatusException(HttpStatus.BAD_REQUEST,
-//        "Cannot delete an assignment that does not exist");
-//
-//        if(!responseRepository.existsById(assignmentId)) {
-//            throw exception;
-//        }
-//        Response responseToDelete = responseRepository.findById(assignmentId).get();
-//
-//        responseRepository.deleteById(assignmentId);
-//        return responseToDelete;
-//    }
-
-
-    //    public Iterable<Response> deleteResponsesForAssignment(Long assignmentId) {
-////        List<Response> responses = List.of(responseRepository.findAllByAssignmentId
-// (assignmentId));
-//        Iterable<Response> test = responseRepository.deleteAllByAssignmentId(assignmentId);
-//
-//    }
-
-//    public Iterable<Response> deleteResponsesForAssignment(Long assignmentId) {
-////        List<Response> responseList = new ArrayList<Response>();
-//        Iterable<Response> responses = responseRepository.findAllByAssignmentId(assignmentId);
-//        ResponseStatusException exception = new ResponseStatusException(HttpStatus.NOT_FOUND, "No responses with that assignment Id were found.");
-//        int count = responseRepository.countByAssignmentId(assignmentId);
-//        if (count == 0) {
-//            throw exception;
-//        }
-////        responses.forEach(responseList::add);
-//
-////        if (responseList.size() == 0) {
-////            throw exception;
-////        }
-//
-//        for (Response response : responses) {
-//            responseRepository.deleteById(response.id);
-//        }
-//        return responses;
-//    }
 }
