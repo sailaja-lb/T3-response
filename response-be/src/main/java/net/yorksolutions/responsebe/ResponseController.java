@@ -20,11 +20,11 @@ public class ResponseController {
         return responseService.getAllResponses();
     }
 
-//    @DeleteMapping("/deleteResponseForAssignment/{assignmentId}")
-//    @CrossOrigin
-//    public Response deleteResponseForAssignment(@PathVariable Long assignmentId) {
-//        return responseService.deleteResponseForAssignment(assignmentId);
-//    }
+    @GetMapping("/addResponse")
+    @CrossOrigin
+    public Assignment addResponse(@RequestParam Long assignmentId, @RequestParam Long questionId, @RequestParam String questionText, @RequestParam String response, @RequestParam Boolean completed) {
+        return responseService.addResponse(assignmentId, questionId, questionText, response, completed);
+    }
 
     @GetMapping("/updateIsComplete")
     @CrossOrigin

@@ -45,8 +45,7 @@ public class ResponseControllerTests {
     void itShouldCallGetAllResponsesAndReturnIterable() {
         Response newResponse1 = new Response(1L, 1L, "q1", "r1", true);
         Response newResponse2 = new Response(2L, 2L, "q2", "r2", false);
-        newResponse1.setId(1L);
-        newResponse2.setId(2L);
+
         Response[] responses = new Response[] {newResponse1, newResponse2};
         TestRestTemplate rest = new TestRestTemplate();
         String url = "http://localhost:" + port + "/getAllResponses";
@@ -60,24 +59,21 @@ public class ResponseControllerTests {
     // ******** test addResponse ********
     @Test
     void itShouldCallAddResponseWithAssignmentIdQuestionIdQuestionTextResponseAndCompletedAndReturnAssignment() {
-//        final Long assignmentId = 0L;
-//        final Long questionId = 0L;
-//        final String questionText = "q text";
-//        final String response = "a response";
-//        final boolean completed = true;
         final Response newResponse1 = new Response(1L, 1L, "q1", "r1", true);
-        final Response newResponse2 = new Response(2L, 2L, "q2", "r2", false);
+//        final Response newResponse2 = new Response(2L, 2L, "q2", "r2", false);
         newResponse1.setId(1L);
-        newResponse2.setId(2L);
-        final Response[] responses = new Response[] {newResponse1, newResponse2};
+//        newResponse2.setId(2L);
+        final Response[] responses = new Response[] {newResponse1};
         final List<Response> responseList = List.of(responses);
-        final Assignment expected = new Assignment("A", 1L, 1L, 1L, responseList);
+        final HttpStatus expectedStatus = HttpStatus.ACCEPTED;
+
+//        final Assignment expected = new Assignment("A", 1L, 1L, 1L, responseList);
+        final Assignment expected = new Assignment(1L);
+        expected.responses.add(newResponse1);
 
         final String url = "http://localhost:" + port + "/addResponse";
         TestRestTemplate rest = new TestRestTemplate();
-
-//        final ArgumentCaptor<> captor = ArgumentCaptor.forClass(HttpServletRequest.class);
-
+        doThrow(new ResponseStatusException(expectedStatus)).when(responseService).addResponse(1L, 1L, "q1", "r1", true);
         when(responseService.addResponse(1L, 1L, "q1", "r1", true)).thenReturn(expected);
         final ResponseEntity<Assignment> assignmentEnt = rest.getForEntity(url, Assignment.class);
 
