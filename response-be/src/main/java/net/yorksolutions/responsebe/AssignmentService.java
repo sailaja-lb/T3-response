@@ -60,4 +60,13 @@ public class AssignmentService {
                 quizTemplateId);
     }
     
+    public void deleteAssignment(Long assignmentId) {
+        Optional<Assignment> assignment = assignmentRepository.findByAssignmentId(assignmentId);
+        if (assignment.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        } else {
+            assignmentRepository.delete(assignment.get());
+        }
+    }
+    
 }

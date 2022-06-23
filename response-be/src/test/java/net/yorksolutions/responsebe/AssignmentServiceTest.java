@@ -33,7 +33,8 @@ class AssignmentServiceTest {
         final Long assignmentId = 9999L;
         final Long quizTemplateId = 9999L;
         final Assignment assignment = new Assignment(quizTemplateId);
-        when(assignmentRepository.findByQuizTemplateId(quizTemplateId)).thenReturn(Optional.of(assignment));
+        when(assignmentRepository.findByQuizTemplateId(quizTemplateId))
+                .thenReturn(Optional.of(assignment));
         ArgumentCaptor<Assignment> captor = ArgumentCaptor.forClass(Assignment.class);
         when(assignmentRepository.save(captor.capture())).thenReturn(new Assignment(assignedTo,
                 quizTemplateId));
@@ -45,7 +46,8 @@ class AssignmentServiceTest {
     void itShouldThrowWhenNoAssignment() {
         final Long assignedTo = 99999L;
         final Long quizTemplateId = 9999L;
-        when(assignmentRepository.findByQuizTemplateId(quizTemplateId)).thenReturn(Optional.empty());
+        when(assignmentRepository.findByQuizTemplateId(quizTemplateId))
+                .thenReturn(Optional.empty());
         assertThrows(ResponseStatusException.class, () -> service.addAssignment(assignedTo,
                 quizTemplateId));
     }
@@ -81,7 +83,8 @@ class AssignmentServiceTest {
         assignments.add(new Assignment(assignedTo));
         assignments.add(new Assignment(assignedTo));
         assignments.add(new Assignment(assignedTo));
-        when(assignmentRepository.findAllByAssignedToAndGradeNotNull(assignedTo)).thenReturn(assignments);
+        when(assignmentRepository.findAllByAssignedToAndGradeNotNull(assignedTo))
+                .thenReturn(assignments);
         assertEquals(assignments, service.getAllGradedAssignments(assignedTo));
     }
     
@@ -105,5 +108,22 @@ class AssignmentServiceTest {
         when(assignmentRepository.findByAssignedToAndQuizTemplateId(assignedTo,
                 quizTemplateId)).thenReturn(Optional.of((assignment)));
         assertEquals(Optional.of(assignment), service.getAssignment(assignedTo, quizTemplateId));
+    }
+    
+    @Test
+    void itShouldDeleteAssignmentWhenAssignmentIdPresent() {
+        final Long assignmentId = 9999L;
+        final Assignment assignment = new Assignment(assignmentId);
+        when(assignmentRepository.findByAssignmentId(assignmentId))
+                .thenReturn(Optional.of(assignment));
+        assertDoesNotThrow(() -> service.deleteAssignment(assignmentId));
+    }
+    
+    @Test
+    void itShouldThrowWhenNoAssignmentId_deleteAssignment() {
+        final Long assignmentId = 9999L;
+        final Assignment assignment = new Assignment(assignmentId);
+        when(assignmentRepository.findByAssignmentId(assignmentId)).thenReturn(Optional.empty());
+        assertThrows(ResponseStatusException.class, () -> service.deleteAssignment(assignmentId));
     }
 }

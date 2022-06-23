@@ -119,4 +119,14 @@ class AssignmentControllerTest {
         assertEquals(assignment, response.getBody());
     }
     
+    @Test
+    void itShouldThrowWhenNoAssessmentId() {
+        final Long assignmentId = 9999L;
+        final Assignment body = new Assignment(assignmentId);
+        String url = "http://localhost:" + port + "/deleteAssignment?assignmentId=" + assignmentId;
+        doThrow(new ResponseStatusException(HttpStatus.ACCEPTED))
+                .when(service).deleteAssignment(assignmentId);
+        final ResponseEntity<Void> response = rest.postForEntity(url, body, Void.class);
+        assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
+    }
 }

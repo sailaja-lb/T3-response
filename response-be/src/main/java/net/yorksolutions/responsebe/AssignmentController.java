@@ -54,4 +54,10 @@ public class AssignmentController {
         return service.getAssignment(assignedTo, quizTemplateId);
     }
     
+    @PostMapping("/deleteAssignment")
+    @CrossOrigin
+    public void deleteAssignment(@RequestParam Long assignmentId) {
+        service.deleteAssignment(assignmentId);
+    }
+    
 }
