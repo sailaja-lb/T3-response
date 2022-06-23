@@ -13,10 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
@@ -73,28 +75,25 @@ class AssignmentControllerTest {
         final ResponseEntity<Void> response = rest.postForEntity(url, body, Void.class);
         assertEquals(HttpStatus.ACCEPTED, response.getStatusCode());
     }
-    
-    @Test
-    void itShouldReturnAllGradedAssignments() {
-        final Long assignedTo = 99999L;
-        final ArrayList<Assignment> isAssignedTo = new ArrayList<>();
-        String url =
-                "http://localhost:" + port + "/getAllGradedResponses?assignedTo=" + assignedTo;
-        
-        // TODO add 2 assignments, use set/add to add to fields
-        // TODO set assignments to array [{},{}]
-        
-        when(controller.getAllGradedAssignments(assignedTo)).thenReturn(isAssignedTo);
-        final ResponseEntity<ArrayList> response = rest.getForEntity(url, ArrayList.class);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(true, response.hasBody());
-//        assertArrayEquals(isAssignedTo, response.getBody());
-    }
+
+//    @Test
+//    void itShouldReturnAllGradedAssignments() {
+//        final Long assignedTo = 99999L;
+//        String url =
+//                "http://localhost:" + port + "/getAllGradedResponses?assignedTo=" + assignedTo;
+//        final String grade1 = "grade1";
+//        final String grade2 = "grade2";
+//        final Assignment assignment1 = new Assignment(assignedTo, grade1);
+//        final Assignment assignment2 = new Assignment(assignedTo, grade2);
+//        final Assignment[] gradedAssignments = new Assignment[]{assignment1, assignment2};
+//        when(service.getAllGradedAssignments(assignedTo)).thenReturn(List.of(gradedAssignments));
+//        final ResponseEntity<Assignment[]> response = rest.getForEntity(url, Assignment[].class);
+//        assertEquals(HttpStatus.OK, response.getStatusCode());
+//        assertArrayEquals(gradedAssignments, response.getBody());
+//    }
     
     @Test
     void itShouldReturnAllAssignments() {
-        final Long assignedTo = 99999L;
-        final String grade = "some grade";
         final Iterable<Assignment> assignments = new ArrayList<>();
         String url =
                 "http://localhost:" + port + "/getAllAssignments";
