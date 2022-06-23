@@ -67,7 +67,6 @@ public class Assignment {
         this.quizTemplateId = quizTemplateId;
     }
     
-    
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -77,15 +76,16 @@ public class Assignment {
             return false;
         }
         Assignment that = (Assignment) o;
-        return Objects.equals(grade,
+        return Objects.equals(assignmentId, that.assignmentId) && Objects.equals(grade,
                 that.grade) && Objects.equals(gradedBy, that.gradedBy)
                 && Objects.equals(assignedTo, that.assignedTo)
-                && Objects.equals(quizTemplateId, that.quizTemplateId);
+                && Objects.equals(quizTemplateId, that.quizTemplateId)
+                && Objects.equals(responses, that.responses);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(grade, gradedBy, assignedTo, quizTemplateId);
+        return Objects.hash(assignmentId, grade, gradedBy, assignedTo, quizTemplateId, responses);
     }
     
     @Override
