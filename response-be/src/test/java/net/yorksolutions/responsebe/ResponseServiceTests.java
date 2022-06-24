@@ -31,20 +31,20 @@ public class ResponseServiceTests {
     AssignmentRepository assignmentRepository;
     
     // ******** test getAllResponses ********
-    @Test
-    void itShouldCallFindResponseByCompletedIsTrueAndReturnAnIterable() {
-        Response newResponse1 = new Response(1L, 1L, "q1", "r1", true);
-        Response newResponse2 = new Response(2L, 2L, "q2", "r2", false);
-        Response[] responses = new Response[]{newResponse1, newResponse2};
-        List<Response> expected = List.of(responses);
-
-//        when(responseRepository.findResponseByCompletedIsTrue()).thenReturn(expected);
-        when(responseRepository.findAllByCompletedIsTrue()).thenReturn(expected);
-        
-        final Iterable<Response> actual = responseService.getAllResponses();
-        
-        assertEquals(expected, actual);
-    }
+//    @Test
+//    void itShouldCallFindResponseByCompletedIsTrueAndReturnAnIterable() {
+//        Response newResponse1 = new Response(1L, 1L, "q1", "r1", true);
+//        Response newResponse2 = new Response(2L, 2L, "q2", "r2", false);
+//        Response[] responses = new Response[]{newResponse1, newResponse2};
+//        List<Response> expected = List.of(responses);
+//
+////        when(responseRepository.findResponseByCompletedIsTrue()).thenReturn(expected);
+//        when(responseRepository.findAllByCompletedIsTrue()).thenReturn(expected);
+//
+//        final Iterable<Response> actual = responseService.getAllResponses();
+//
+//        assertEquals(expected, actual);
+//    }
     
     // ******** test addResponse ********
 //    @Test // failure

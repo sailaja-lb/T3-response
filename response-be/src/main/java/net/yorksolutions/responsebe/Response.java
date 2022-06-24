@@ -25,22 +25,16 @@ public class Response {
     @JsonProperty
     String response;
     
-    @JsonProperty
-    Boolean completed;
-    
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "response_id")
     Assignment assignment;
     
     
-    public Response(Long assignmentId, Long questionId, String questionText, String response,
-                    Boolean completed) {
-//        this.assignmentId = assignmentId;
+    public Response(Long assignmentId, Long questionId, String questionText, String response) {
         this.questionId = questionId;
         this.questionText = questionText;
         this.response = response;
-        this.completed = completed;
     }
     
     public Response() {
@@ -56,20 +50,16 @@ public class Response {
             return false;
         }
         Response response1 = (Response) o;
-        return Objects.equals(id, response1.id) /*&& Objects.equals(assignmentId,
-                response1.assignmentId) */ && Objects.equals(questionId, response1.questionId) &&
-                Objects.equals(questionText, response1.questionText)
-                && Objects.equals(response, response1.response)
-                && Objects.equals(completed, response1.completed);
+        return Objects.equals(id, response1.id) && Objects.equals(questionId,
+                response1.questionId) && Objects.equals(questionText, response1.questionText) && Objects.equals(response, response1.response) && Objects.equals(assignment, response1.assignment);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(id, /*assignmentId,*/
-                questionId, questionText, response, completed);
+        return Objects.hash(id, questionId, questionText, response, assignment);
     }
-
-// ******** setters ********
+    
+    // ******** setters ********
 
 //    public void setId(Long id) {
 //        this.id = id;
