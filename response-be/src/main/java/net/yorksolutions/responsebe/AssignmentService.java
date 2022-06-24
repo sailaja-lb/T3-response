@@ -69,17 +69,15 @@ public class AssignmentService {
         }
     }
     
-    
     public Assignment addResponse(Long assignmentId, Long questionId, String questionText,
-                                  String response, Boolean completed) {
+                                  String response) {
         Optional<Assignment> assignmentOp = assignmentRepository.findById(assignmentId);
         if (assignmentRepository.findById(assignmentId).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No" +
                     " assignment exists with the given id.");
         }
         Assignment assignment = assignmentOp.get();
-        Response responseObj = new Response(assignmentId, questionId, questionText, response,
-                completed);
+        Response responseObj = new Response(questionId, questionText, response);
         
         assignment.addResponse(responseObj);
         assignmentRepository.save(assignment);
@@ -100,16 +98,27 @@ public class AssignmentService {
         responseRepository.delete(response);
     }
     
-    public void updateIsComplete(Long id) { // id = response id (Generated)
-        Optional<Response> responseOp = responseRepository.findById(id);
+    public void updateIsComplete(Long assignmentId) {
+        Optional<Assignment> assignmentOptional =
+                assignmentRepository.findById(assignmentId);
         ResponseStatusException exception = new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Assignment not found.");
         
-        if (responseOp.isEmpty()) {
+        if (assignmentOptional.isEmpty()) {
             throw exception;
         }
-        Response response = responseOp.get();
-        response.completed = true;
-        responseRepository.save(response);
+        Assignment assignment = assignmentOptional.get();
+        assignment.completed = true;
+        assignmentRepository.save(assignment);
+    }
+    
+    public Iterable<Assignment> getAllCompletedAssignments(Boolean complete) {
+        Iterable<Assignment> isAssignedTo =
+                assignmentRepository.findAllByCompleted(complete);
+        if (isAssignedTo == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        } else {
+            return assignmentRepository.findAllByCompleted(complete);
+        }
     }
 }

@@ -38,21 +38,21 @@ public class ResponseControllerTests {
     }
     
     // ******** test getAllResponses ********
-    @Test
-    void itShouldCallGetAllResponsesAndReturnIterable() {
-        Response newResponse1 = new Response(1L, 1L, "q1", "r1", true);
-        Response newResponse2 = new Response(2L, 2L, "q2", "r2", false);
-        
-        Response[] responses = new Response[]{newResponse1, newResponse2};
-        TestRestTemplate rest = new TestRestTemplate();
-        String url = "http://localhost:" + port + "/getAllResponses";
-        
-        when(responseService.getAllResponses()).thenReturn(List.of(responses));
-        final ResponseEntity<Response[]> endpointResponse = rest.getForEntity(url,
-                Response[].class);
-        
-        assertArrayEquals(responses, endpointResponse.getBody());
-    }
+//    @Test
+//    void itShouldCallGetAllResponsesAndReturnIterable() {
+//        Response newResponse1 = new Response(1L, 1L, "q1", "r1", true);
+//        Response newResponse2 = new Response(2L, 2L, "q2", "r2", false);
+//
+//        Response[] responses = new Response[]{newResponse1, newResponse2};
+//        TestRestTemplate rest = new TestRestTemplate();
+//        String url = "http://localhost:" + port + "/getAllResponses";
+//
+//        when(responseService.getAllResponses()).thenReturn(List.of(responses));
+//        final ResponseEntity<Response[]> endpointResponse = rest.getForEntity(url,
+//                Response[].class);
+//
+//        assertArrayEquals(responses, endpointResponse.getBody());
+//    }
     
     // ******** test addResponse ********
 //    @Test

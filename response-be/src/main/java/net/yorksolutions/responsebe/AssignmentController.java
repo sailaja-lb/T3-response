@@ -65,7 +65,7 @@ public class AssignmentController {
     public Assignment addResponse(@RequestParam Long assignmentId, @RequestParam Long questionId,
                                   @RequestParam String questionText,
                                   @RequestParam String response, @RequestParam Boolean completed) {
-        return service.addResponse(assignmentId, questionId, questionText, response, completed);
+        return service.addResponse(assignmentId, questionId, questionText, response);
     }
     
     @GetMapping("/deleteResponse")
@@ -74,9 +74,15 @@ public class AssignmentController {
         service.deleteResponse(id);
     }
     
-    @GetMapping("/updateIsComplete")
+    @GetMapping("/updateCompleteAssignment")
     @CrossOrigin
-    public void updateIsComplete(@RequestParam Long id) { // id = response id (Generated)
-        service.updateIsComplete(id);
+    public void updateIsComplete(@RequestParam Long assignmentId) { // id = response id (Generated)
+        service.updateIsComplete(assignmentId);
+    }
+    
+    @GetMapping("/getAllCompletedAssignments")
+    @CrossOrigin
+    public Iterable<Assignment> getAllGradedAssignments(@RequestParam Boolean complete) {
+        return service.getAllCompletedAssignments(complete);
     }
 }

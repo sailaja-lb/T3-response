@@ -25,9 +25,9 @@ public class ResponseService {
     /************************************************************************************
      * Not sure is getAllResponses is needed, can get Assignment and view all responses *
      ************************************************************************************/
-    public Iterable<Response> getAllResponses() {
-        return responseRepository.findAllByCompletedIsTrue();
-    }
+//    public Iterable<Response> getAllResponses() {
+//        return responseRepository.findAllByCompletedIsTrue();
+//    }
 
 //    public Assignment addResponse(Long assignmentId, Long questionId, String questionText,
 //                                  String response, Boolean completed) {

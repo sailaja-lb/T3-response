@@ -13,12 +13,12 @@ public class ResponseController {
     public ResponseController(@NonNull ResponseService responseService) {
         this.responseService = responseService;
     }
-    
-    @GetMapping("/getAllResponses")
-    @CrossOrigin
-    public Iterable<Response> getAllResponses() {
-        return responseService.getAllResponses();
-    }
+
+//    @GetMapping("/getAllResponses")
+//    @CrossOrigin
+//    public Iterable<Response> getAllResponses() {
+//        return responseService.getAllResponses();
+//    }
 
 //    @GetMapping("/addResponse")
 //    @CrossOrigin

@@ -31,6 +31,9 @@ public class Assignment {
     Long quizTemplateId; // Id from quizTemplate
     
     @JsonProperty
+    Boolean completed;
+    
+    @JsonProperty
     @OneToMany(cascade = ALL)
     List<Response> responses;
     
@@ -44,12 +47,13 @@ public class Assignment {
     }
     
     public Assignment(String grade, Long gradedBy, Long assignedTo,
-                      Long quizTemplateId, List<Response> responses) {
+                      Long quizTemplateId, List<Response> responses, Boolean completed) {
         this.grade = grade;
         this.gradedBy = gradedBy;
         this.assignedTo = assignedTo;
         this.quizTemplateId = quizTemplateId;
         this.responses = responses;
+        this.completed = completed;
     }
     
     public Assignment(Long assignedTo, String grade) {
@@ -68,6 +72,7 @@ public class Assignment {
     }
     
     @Override
+    
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -77,25 +82,26 @@ public class Assignment {
         }
         Assignment that = (Assignment) o;
         return Objects.equals(assignmentId, that.assignmentId) && Objects.equals(grade,
-                that.grade) && Objects.equals(gradedBy, that.gradedBy)
-                && Objects.equals(assignedTo, that.assignedTo)
-                && Objects.equals(quizTemplateId, that.quizTemplateId)
-                && Objects.equals(responses, that.responses);
-    }
-    
-    @Override
-    public int hashCode() {
-        return Objects.hash(assignmentId, grade, gradedBy, assignedTo, quizTemplateId, responses);
+                that.grade) && Objects.equals(gradedBy, that.gradedBy) && Objects.equals(assignedTo, that.assignedTo) && Objects.equals(quizTemplateId, that.quizTemplateId) && Objects.equals(completed, that.completed) && Objects.equals(responses, that.responses);
     }
     
     @Override
     public String toString() {
-        return "Assignments{" +
-                "grade='" + grade + '\'' +
-                ", gradedBy='" + gradedBy + '\'' +
+        return "Assignment{" +
+                "assignmentId=" + assignmentId +
+                ", grade='" + grade + '\'' +
+                ", gradedBy=" + gradedBy +
                 ", assignedTo=" + assignedTo +
                 ", quizTemplateId=" + quizTemplateId +
+                ", completed=" + completed +
+                ", responses=" + responses +
                 '}';
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(assignmentId, grade, gradedBy, assignedTo, quizTemplateId, completed,
+                responses);
     }
     
     public List<Response> getResponses() {

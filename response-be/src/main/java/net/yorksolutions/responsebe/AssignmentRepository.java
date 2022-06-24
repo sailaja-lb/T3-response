@@ -17,4 +17,6 @@ public interface AssignmentRepository extends CrudRepository<Assignment, Long> {
     Iterable<Assignment> findAllByAssignedToAndGradeNotNull(Long assignedTo);
     
     Optional<Assignment> findAssignmentByResponsesId(Long id);
+    
+    Iterable<Assignment> findAllByCompleted(Boolean complete);
 }
