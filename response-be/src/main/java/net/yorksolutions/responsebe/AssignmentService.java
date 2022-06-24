@@ -13,9 +13,13 @@ public class AssignmentService {
     
     final AssignmentRepository assignmentRepository;
     
+    private ResponseRepository responseRepository;
+    
     @Autowired
-    public AssignmentService(@NonNull AssignmentRepository assignmentRepository) {
+    public AssignmentService(@NonNull AssignmentRepository assignmentRepository,
+                             @NonNull ResponseRepository responseRepository) {
         this.assignmentRepository = assignmentRepository;
+        this.responseRepository = responseRepository;
     }
     
     /********************
@@ -23,10 +27,6 @@ public class AssignmentService {
      ********************/
     
     public void addAssignment(Long assignedTo, Long quizTemplateId) {
-        Optional<Assignment> assignment = assignmentRepository.findByQuizTemplateId(quizTemplateId);
-        if (assignment.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
         assignmentRepository.save(new Assignment(assignedTo, quizTemplateId));
     }
     
@@ -63,10 +63,53 @@ public class AssignmentService {
     public void deleteAssignment(Long assignmentId) {
         Optional<Assignment> assignment = assignmentRepository.findByAssignmentId(assignmentId);
         if (assignment.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {
             assignmentRepository.delete(assignment.get());
         }
     }
     
+    
+    public Assignment addResponse(Long assignmentId, Long questionId, String questionText,
+                                  String response, Boolean completed) {
+        Optional<Assignment> assignmentOp = assignmentRepository.findById(assignmentId);
+        if (assignmentRepository.findById(assignmentId).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No" +
+                    " assignment exists with the given id.");
+        }
+        Assignment assignment = assignmentOp.get();
+        Response responseObj = new Response(assignmentId, questionId, questionText, response,
+                completed);
+        
+        assignment.addResponse(responseObj);
+        assignmentRepository.save(assignment);
+        return assignment;
+    }
+    
+    public void deleteResponse(Long id) { // id = response id (Generated)
+        Optional<Response> responseOptional = responseRepository.findResponsesById(id);
+        Optional<Assignment> assignmentOptional =
+                assignmentRepository.findAssignmentByResponsesId(id);
+        if (responseRepository.findResponseById(id).isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        Assignment assignment = assignmentOptional.get();
+        Response response = responseOptional.get();
+        assignment.getResponses().remove(response);
+        assignmentRepository.save(assignment);
+        responseRepository.delete(response);
+    }
+    
+    public void updateIsComplete(Long id) { // id = response id (Generated)
+        Optional<Response> responseOp = responseRepository.findById(id);
+        ResponseStatusException exception = new ResponseStatusException(HttpStatus.NOT_FOUND,
+                "Assignment not found.");
+        
+        if (responseOp.isEmpty()) {
+            throw exception;
+        }
+        Response response = responseOp.get();
+        response.completed = true;
+        responseRepository.save(response);
+    }
 }

@@ -97,4 +97,8 @@ public class Assignment {
                 ", quizTemplateId=" + quizTemplateId +
                 '}';
     }
+    
+    public List<Response> getResponses() {
+        return responses;
+    }
 }
