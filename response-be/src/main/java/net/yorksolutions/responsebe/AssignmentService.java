@@ -24,6 +24,9 @@ public class AssignmentService {
     
     public void addAssignment(Long assignedTo, Long quizTemplateId) {
         Optional<Assignment> assignment = assignmentRepository.findByQuizTemplateId(quizTemplateId);
+        if (assignment.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
         assignmentRepository.save(new Assignment(assignedTo, quizTemplateId));
     }
     
