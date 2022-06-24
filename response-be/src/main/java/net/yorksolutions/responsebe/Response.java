@@ -12,9 +12,6 @@ public class Response {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @JsonProperty
     Long id;
-
-//    @JsonProperty
-//    Long assignmentId;
     
     @JsonProperty
     Long questionId;
@@ -31,7 +28,7 @@ public class Response {
     Assignment assignment;
     
     
-    public Response(Long assignmentId, Long questionId, String questionText, String response) {
+    public Response(Long questionId, String questionText, String response) {
         this.questionId = questionId;
         this.questionText = questionText;
         this.response = response;
@@ -51,17 +48,13 @@ public class Response {
         }
         Response response1 = (Response) o;
         return Objects.equals(id, response1.id) && Objects.equals(questionId,
-                response1.questionId) && Objects.equals(questionText, response1.questionText) && Objects.equals(response, response1.response) && Objects.equals(assignment, response1.assignment);
+                response1.questionId) && Objects.equals(questionText, response1.questionText)
+                && Objects.equals(response, response1.response)
+                && Objects.equals(assignment, response1.assignment);
     }
     
     @Override
     public int hashCode() {
         return Objects.hash(id, questionId, questionText, response, assignment);
     }
-    
-    // ******** setters ********
-
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
 }

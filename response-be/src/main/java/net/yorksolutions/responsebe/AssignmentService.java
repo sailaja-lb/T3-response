@@ -69,7 +69,6 @@ public class AssignmentService {
         }
     }
     
-    
     public Assignment addResponse(Long assignmentId, Long questionId, String questionText,
                                   String response) {
         Optional<Assignment> assignmentOp = assignmentRepository.findById(assignmentId);
@@ -78,7 +77,7 @@ public class AssignmentService {
                     " assignment exists with the given id.");
         }
         Assignment assignment = assignmentOp.get();
-        Response responseObj = new Response(assignmentId, questionId, questionText, response);
+        Response responseObj = new Response(questionId, questionText, response);
         
         assignment.addResponse(responseObj);
         assignmentRepository.save(assignment);
@@ -122,6 +121,4 @@ public class AssignmentService {
             return assignmentRepository.findAllByCompleted(complete);
         }
     }
-    
-    //TODO getCompletedAssignments
 }
