@@ -64,7 +64,7 @@ public class AssignmentController {
     @CrossOrigin
     public Assignment addResponse(@RequestParam Long assignmentId, @RequestParam Long questionId,
                                   @RequestParam String questionText,
-                                  @RequestParam String response, @RequestParam Boolean completed) {
+                                  @RequestParam String response) {
         return service.addResponse(assignmentId, questionId, questionText, response);
     }
     
