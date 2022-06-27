@@ -70,14 +70,14 @@ public class AssignmentService {
     }
     
     public Assignment addResponse(Long assignmentId, Long questionId, String questionText,
-                                  String response /* Long applicantUserId */) {
+                                  String response) {
         Optional<Assignment> assignmentOp = assignmentRepository.findById(assignmentId);
         if (assignmentRepository.findById(assignmentId).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No" +
                     " assignment exists with the given id.");
             
-        } else if (responseRepository.findResponseByQuestionId(questionId).isPresent() /* &&
-        applicantUserId.isPresent */) {
+        } else if (responseRepository.findResponseByQuestionId(questionId).isPresent() &&
+                assignmentRepository.findById(assignmentId).isPresent()) {
             throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED);
             
         } else {
