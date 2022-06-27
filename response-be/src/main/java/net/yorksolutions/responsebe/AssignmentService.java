@@ -6,6 +6,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -76,17 +77,42 @@ public class AssignmentService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No" +
                     " assignment exists with the given id.");
             
-        } else if (responseRepository.findResponseByQuestionId(questionId).isPresent() &&
-                assignmentRepository.findById(assignmentId).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED);
-            
-        } else {
-            Assignment assignment = assignmentOp.get();
-            Response responseObj = new Response(questionId, questionText, response);
-            assignment.addResponse(responseObj);
-            assignmentRepository.save(assignment);
-            return assignment;
         }
+        // find all response records for that assignment id
+        // within those, is there a record for the question id
+        //
+        Assignment assignment = assignmentOp.get();
+        boolean safeToAdd = true;
+        List<Response> responseList = assignment.responses;
+        for (Response resp : responseList) {
+            if (resp.questionId == questionId) {
+                safeToAdd = false;
+            }
+            break;
+        }
+
+        if (!safeToAdd) {
+            throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED);
+        }
+
+        Response responseObj = new Response(questionId, questionText, response);
+        assignment.addResponse(responseObj);
+        assignmentRepository.save(assignment);
+        return assignment;
+
+
+
+//        else if (responseRepository.findResponseByQuestionId(questionId).isPresent() &&
+//                assignmentRepository.findById(assignmentId).isPresent()) {
+//            throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED);
+//
+//        } else {
+//            Assignment assignment = assignmentOp.get();
+//            Response responseObj = new Response(questionId, questionText, response);
+//            assignment.addResponse(responseObj);
+//            assignmentRepository.save(assignment);
+//            return assignment;
+//        }
     }
     
     
