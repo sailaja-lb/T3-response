@@ -24,8 +24,9 @@ public class AssignmentController {
     @PostMapping("/addAssignment")
     @CrossOrigin
     public void addAssignment(@RequestParam Long assignedTo,
-                              @RequestParam Long quizTemplateId) {
-        service.addAssignment(assignedTo, quizTemplateId);
+                              @RequestParam Long quizTemplateId
+            /* @RequestParam Long applicantUserId */) {
+        service.addAssignment(assignedTo, quizTemplateId /* applicantUserId */);
     }
     
     @PostMapping("/updateGrade")

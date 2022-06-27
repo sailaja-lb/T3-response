@@ -70,19 +70,25 @@ public class AssignmentService {
     }
     
     public Assignment addResponse(Long assignmentId, Long questionId, String questionText,
-                                  String response) {
+                                  String response /* Long applicantUserId */) {
         Optional<Assignment> assignmentOp = assignmentRepository.findById(assignmentId);
         if (assignmentRepository.findById(assignmentId).isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No" +
                     " assignment exists with the given id.");
+            
+        } else if (responseRepository.findResponseByQuestionId(questionId).isPresent() /* &&
+        applicantUserId.isPresent */) {
+            throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED);
+            
+        } else {
+            Assignment assignment = assignmentOp.get();
+            Response responseObj = new Response(questionId, questionText, response);
+            assignment.addResponse(responseObj);
+            assignmentRepository.save(assignment);
+            return assignment;
         }
-        Assignment assignment = assignmentOp.get();
-        Response responseObj = new Response(questionId, questionText, response);
-        
-        assignment.addResponse(responseObj);
-        assignmentRepository.save(assignment);
-        return assignment;
     }
+    
     
     public void deleteResponse(Long id) { // id = response id (Generated)
         Optional<Response> responseOptional = responseRepository.findResponsesById(id);
