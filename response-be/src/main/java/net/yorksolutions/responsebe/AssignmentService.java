@@ -26,9 +26,14 @@ public class AssignmentService {
     /********************
      * Code Starts Here *
      ********************/
-    
+
     public void addAssignment(Long assignedTo, Long quizTemplateId) {
-        assignmentRepository.save(new Assignment(assignedTo, quizTemplateId));
+        Optional<Assignment> assignment = assignmentRepository.findByAssignedToAndQuizTemplateId(assignedTo,quizTemplateId);
+        if(assignment.isEmpty()){
+            assignmentRepository.save(new Assignment(assignedTo, quizTemplateId));}
+        else {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        }
     }
     
     public void updateGrade(Long assignmentId, String grade, Long gradedBy) {
@@ -53,7 +58,7 @@ public class AssignmentService {
     }
     
     public Iterable<Assignment> getAllAssignments() {
-        return assignmentRepository.findAll();
+        return assignmentRepository.findAllByOrderByQuizTemplateId();
     }
     
     public Optional<Assignment> getAssignment(Long assignedTo, Long quizTemplateId) {

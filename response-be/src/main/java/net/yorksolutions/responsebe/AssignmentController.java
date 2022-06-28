@@ -23,10 +23,11 @@ public class AssignmentController {
     
     @PostMapping("/addAssignment")
     @CrossOrigin
-    public void addAssignment(@RequestParam Long assignedTo,
+    public Iterable<Assignment> addAssignment(@RequestParam Long assignedTo,
                               @RequestParam Long quizTemplateId
             /* @RequestParam Long applicantUserId */) {
         service.addAssignment(assignedTo, quizTemplateId /* applicantUserId */);
+        return service.getAllAssignments();
     }
     
     @PostMapping("/updateGrade")
@@ -55,10 +56,11 @@ public class AssignmentController {
         return service.getAssignment(assignedTo, quizTemplateId);
     }
     
-    @PostMapping("/deleteAssignment")
+    @GetMapping("/deleteAssignment")
     @CrossOrigin
-    public void deleteAssignment(@RequestParam Long assignmentId) {
+    public Iterable<Assignment> deleteAssignment(@RequestParam Long assignmentId) {
         service.deleteAssignment(assignmentId);
+        return service.getAllAssignments();
     }
     
     @GetMapping("/addResponse")
